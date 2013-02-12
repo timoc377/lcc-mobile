@@ -3,6 +3,17 @@
 	margin-bottom: 8px;
 }
 
+.wrapper {
+    padding-top : 45px;
+}
+.wrapper form {
+    position : fixed;
+    top      : 15px;
+    width    : 100%;
+    z-index  : 2;
+    opacity: none;
+}​
+
 #actionList {
 	clear: both;
 }

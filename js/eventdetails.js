@@ -20,6 +20,8 @@ $(function(){
 		$('#eventEndDateTime').text('Ends: ' + myEvent.enddates + ' ' + myEvent.endtimes);
 		$('#eventVenue').text('Location: ' + myEvent.venue);
 		$('#eventCategory').text('Category: ' + myEvent.catname);
+		myEvent.datdescription = myEvent.datdescription.replace(/\<p\>/g, '');
+		myEvent.datdescription = myEvent.datdescription.replace(/\<\/p\>/g, '');
 		$('#eventDescription').text(myEvent.datdescription);
 		$('#eventEventList').listview('refresh');
 		

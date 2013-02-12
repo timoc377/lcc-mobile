@@ -1,150 +1,192 @@
-<!DOCTYPE HTML>
-<html lang="en">
-<head>
-  <title>Lighthouse Moblie Connect</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <link rel="stylesheet" href="css/jquery.mobile-1.0rc1.min.css" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <!DOCTYPE HTML>
+  <html lang="en">
+  <head>
+    <title>Lighthouse Moblie Connect</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.css">
+    <link rel="stylesheet" href="css/jquery.mobile.fixedToolbar.polyfill.css" />
+    <link rel="stylesheet" href="css/styles.css" />
 
-  <script src="js/jquery.js"></script>
-  <script src="js/jqm.page.params.js"></script>
-  <script src="js/jquery.mobile-1.0rc1.min.js"></script>
-  <script src="js/eventlist.js"></script>
-  <script src="js/eventdetails.js"></script>
-  <script src="js/noticelist.js"></script>
-  <script src="js/noticedetails.js"></script>  
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="js/jqm.page.params.js"></script>
+    <script src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script>
+    <script src="js/jquery.mobile.fixedToolbar.polyfill.js"></script>  
+    <script src="js/eventlist.js"></script>
+    <script src="js/eventdetails.js"></script>
+    <script src="js/noticelist.js"></script>
+    <script src="js/noticedetails.js"></script>  
+    <script src="js/prayerlist.js"></script>
+    <script src="js/prayerdetails.js"></script>
+  </head>
 
-</head>
+  <body>
 
-<body>
+  <!-- <div id="landingPage" data-role="page" style="background:transparent url('images/bg.jpg') center center no-repeat;">
+    <div data-role="content">
+    </div>
 
-  <div id="landingPage" data-role="page" style="background:transparent url('images/bg.jpg') center center no-repeat;">
+    <div data-role="footer" data-position="fixed">
+      <div data-role="navbar" data-theme="b">
+        <ul>
+          <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li>
+          <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
+          <li><a href="#" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
+          <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
+        </ul>
+      </div>
+    </div>
 
-   <div data-role="header" data-position="fixed">
-    <h1>Lighthouse Mobile Connect</h1>
-  </div>
+  </div> --> <!-- landingPage -->
 
-  <div data-role="content">
-  </div>
+  <div id="eventListPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
 
-  <div data-role="footer" data-position="fixed">
+    <div data-role="content">
+      <div class="wrapper"><ul id="eventList" data-role="listview" data-filter="true"></ul></div>
+    </div>		
+
+   <div data-role="footer" data-position="fixed" data-transition="none">
     <div data-role="navbar" data-theme="b">
       <ul>
-        <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li>
+        <!-- <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li> -->
         <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
-        <li><a href="#" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
+        <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
         <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
       </ul>
     </div>
   </div>
+  </div> <!-- eventListPage -->
 
-</div> <!-- landingPage -->
-
-<div id="eventListPage" data-role="page" data-theme="b" data-content-theme="b" data-add-back-btn="false">
-
-	<div data-role="header" data-position="fixed">
-		<h1>Lighthouse Events</h1>
-	</div>
-
-	<div data-role="content">
-   <ul id="eventList" data-role="listview" data-filter="true"></ul>
- </div>		
-
- <div data-role="footer" data-position="fixed">
-  <div data-role="navbar" data-theme="b">
-    <ul>
-      <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li>
-      <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
-      <li><a href="#" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
-      <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
-    </ul>
-  </div>
-</div>
-</div> <!-- eventListPage -->
-
-<div id="eventDetailsPage" data-role="page" data-theme="b" data-content-theme="b"  data-add-back-btn="false">
-
-	<div data-role="header">
-		<h1>Event Details</h1>
-	</div>
-
-  <div data-role="content"> 
-
-   <div id="eventDetails">
-     <h3 id="eventTitle"></h3>
-     <p id="eventStartDateTime"></p>
-     <p id="eventEndDateTime"></p>
-     <p id="eventVenue"></p>
-     <p id="eventCategory"></p>
-     <p id="eventDescription"></p>
-   </div>
-
-   <ul id="actionList" data-role="listview" data-inset="true"></ul>
-
- </div>
-
- <div data-role="footer" data-position="fixed">
-  <div data-role="navbar" data-theme="b">
-    <ul>
-      <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li>
-      <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
-      <li><a href="#" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
-      <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
-    </ul>
-  </div>
-</div>
-</div> <!-- eventDetailsPage -->
-
-
-<div id="noticeListPage" data-role="page" data-theme="b" data-content-theme="b" data-add-back-btn="false">
-
-	<div data-role="header" data-position="fixed">
-		<h1>Lighthouse Announcements</h1>
-	</div>
-
-	<div data-role="content">
-    <ul id="noticeList" data-role="listview" data-filter="true"></ul>
-  </div>		
-
-  <div data-role="footer" data-position="fixed">
-    <div data-role="navbar" data-theme="b">
-      <ul>
-        <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li>
-        <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
-        <li><a href="#" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
-        <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
-      </ul>
-    </div>
-  </div>
-</div> <!-- noticeListPage -->
-
-<div id="noticeDetailsPage" data-role="page" data-theme="b" data-content-theme="b" data-add-back-btn="false">
-    <div data-role="header">
-      <h1>Announcement Details</h1>
+  <div id="eventDetailsPage" data-role="page" data-theme="b" data-content-theme="c"  data-add-back-btn="false">
+    <div data-role="navbar">
+     <a data-rel="back">Back</a>
     </div>
 
     <div data-role="content"> 
 
-      <div id="noticeDetails">
-       <h3 id="noticeTitle"></h3>
-       <p id="noticeDescription"></p>
+      <div id="eventDetails">
+       <h3 id="eventTitle"></h3>
+       <p id="eventStartDateTime"></p>
+       <p id="eventEndDateTime"></p>
+       <p id="eventVenue"></p>
+       <p id="eventCategory"></p>
+       <p id="eventDescription"></p>
+      </div>
+
+      <ul id="actionList" data-role="listview" data-inset="true"></ul>
+
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+      <div data-role="navbar" data-theme="b">
+        <ul>
+          <!-- <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li> -->
+          <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
+          <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
+          <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
+        </ul>
+      </div>
+    </div>
+  </div> <!-- eventDetailsPage -->
+
+  <div id="prayerListPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
+
+    <div data-role="content">
+      <div class="wrapper"><ul id="prayerList" data-role="listview" data-filter="true"></ul></div>
+      </div>    
+
+      <div data-role="footer" data-position="fixed" data-transition="none">
+      <div data-role="navbar" data-theme="b">
+        <ul>
+          <!-- <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li> -->
+          <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
+          <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
+          <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
+        </ul>
+      </div>
+    </div>
+  </div> <!-- prayerListPage -->
+
+  <div id="prayerDetailsPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
+
+      <div data-role="navbar">
+        <a data-rel="back">Back</a>
+      </div>
+
+      <div data-role="content"> 
+
+        <div id="prayerDetails">
+         <h3 id="prayerTitle"></h3>
+         <p id="prayerDescription"></p>
+         <p id="prayerDate"></p>
+         <p id="prayerList"></p>
+        </div>
+
      </div>
 
-   </div>
-
-   <div data-role="footer" data-position="fixed">
-    <div data-role="navbar" data-theme="b">
-      <ul>
-        <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li>
-        <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
-        <li><a href="#" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
-        <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
-      </ul>
+     <div data-role="footer" data-position="fixed">
+      <div data-role="navbar" data-theme="b">
+        <ul>
+          <!-- <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li> -->
+          <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
+          <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
+          <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
-</div><!-- noticeDetailsPage -->
+  </div><!-- prayerDetailsPage -->
 
 
-</body>
+  <div id="noticeListPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
 
-</html>
+
+  	<div data-role="content">
+      <ul id="noticeList" data-role="listview" data-filter="true"></ul>
+    </div>		
+
+    <div data-role="footer" data-position="fixed">
+      <div data-role="navbar" data-theme="b">
+        <ul>
+          <!-- <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li> -->
+          <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
+          <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
+          <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
+        </ul>
+      </div>
+    </div>
+  </div> <!-- noticeListPage -->
+
+  <div id="noticeDetailsPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
+
+      <div data-role="content"> 
+
+        <div id="noticeDetails">
+         <h3 id="noticeTitle"></h3>
+         <p id="noticeDescription"></p>
+       </div>
+
+     </div>
+
+     <div data-role="footer" data-position="fixed">
+      <div data-role="navbar" data-theme="b">
+        <ul>
+          <!-- <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li> -->
+          <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
+          <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
+          <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
+        </ul>
+      </div>
+    </div>
+  </div><!-- noticeDetailsPage -->
+
+  <script type="text/javascript">
+    $(function(){
+      $("[data-role=footer]").fixedtoolbar({ transition: "none" });
+      $("[data-role=header]").fixedtoolbar({ transition: "none" });
+      // $("[data-role=footer]").fixedtoolbar({ fullscreen: true });
+      // $("[data-role=footer]").fixedtoolbar({ updatePagePadding: false });
+    })
+  </script>
+
+  </body>
+
+  </html>

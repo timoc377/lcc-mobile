@@ -16,6 +16,8 @@ $(function(){
 		var myNotice = data.item;
 		console.log(data);
 		$('#noticeTitle').text(myNotice.title);
+		myNotice.description = myNotice.description.replace(/\<p\>/g, '');
+		myNotice.description = myNotice.description.replace(/\<\/p\>/g, '');
 		$('#noticeDescription').text(myNotice.description);
 		$('#noticeList').listview('refresh');		
 	}
