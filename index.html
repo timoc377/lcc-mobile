@@ -3,9 +3,10 @@
   <head>
     <title>Lighthouse Moblie Connect</title>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    
     <link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.css">
     <link rel="stylesheet" href="css/jquery.mobile.fixedToolbar.polyfill.css" />
-    <link rel="stylesheet" href="css/styles.css" />
+    
 
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="js/jqm.page.params.js"></script>
@@ -17,6 +18,19 @@
     <script src="js/noticedetails.js"></script>  
     <script src="js/prayerlist.js"></script>
     <script src="js/prayerdetails.js"></script>
+
+    <script>
+    var userAgent = navigator.userAgent + '';
+      if (userAgent.indexOf('iPhone') > -1 || userAgent.indexOf('iPad') > -1) {
+        document.write('<link rel="stylesheet" href="css/styles.css" />');
+        var mobile_system = 'iphone';
+      } else if (userAgent.indexOf('Android') > -1) {
+        document.write('<link rel="stylesheet" href="css/AndroidHoloDarkLight.css" />');
+        var mobile_system = 'android';
+      } else {
+        var mobile_system = 'none';
+      }
+    </script>
   </head>
 
   <body>
@@ -41,15 +55,15 @@
   <div id="eventListPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
 
     <div data-role="content">
-      <div class="wrapper"><ul id="eventList" data-role="listview" data-filter="true"></ul></div>
+      <ul id="eventList" data-role="listview" data-filter="true"></ul>
     </div>		
 
    <div data-role="footer" data-position="fixed" data-transition="none">
     <div data-role="navbar" data-theme="b">
-      <ul>
+      <ul style="display:block; height: 60px;">
         <!-- <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li> -->
         <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
-        <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
+        <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayers</a></li>
         <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
       </ul>
     </div>
@@ -78,10 +92,10 @@
 
     <div data-role="footer" data-position="fixed">
       <div data-role="navbar" data-theme="b">
-        <ul>
+        <ul style="display:block; height: 60px;">
           <!-- <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li> -->
           <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
-          <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
+          <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayers</a></li>
           <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
         </ul>
       </div>
@@ -91,15 +105,15 @@
   <div id="prayerListPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
 
     <div data-role="content">
-      <div class="wrapper"><ul id="prayerList" data-role="listview" data-filter="true"></ul></div>
+      <ul id="prayerList" data-role="listview" data-filter="true"></ul>
       </div>    
 
-      <div data-role="footer" data-position="fixed" data-transition="none">
+      <div data-role="footer" data-position="fixed">
       <div data-role="navbar" data-theme="b">
-        <ul>
+        <ul style="display:block; height: 60px;">
           <!-- <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li> -->
           <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
-          <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
+          <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayers</a></li>
           <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
         </ul>
       </div>
@@ -125,10 +139,10 @@
 
      <div data-role="footer" data-position="fixed">
       <div data-role="navbar" data-theme="b">
-        <ul>
+        <ul style="display:block; height: 60px;">
           <!-- <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li> -->
           <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
-          <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
+          <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayers</a></li>
           <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
         </ul>
       </div>
@@ -145,10 +159,10 @@
 
     <div data-role="footer" data-position="fixed">
       <div data-role="navbar" data-theme="b">
-        <ul>
+        <ul style="display:block; height: 60px;">
           <!-- <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li> -->
           <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
-          <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
+          <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayers</a></li>
           <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
         </ul>
       </div>
@@ -168,10 +182,10 @@
 
      <div data-role="footer" data-position="fixed">
       <div data-role="navbar" data-theme="b">
-        <ul>
+        <ul style="display:block; height: 60px;">
           <!-- <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li> -->
           <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
-          <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
+          <li><a href="#prayerListPage" data-role="button" data-theme="b" data-icon="star">Prayers</a></li>
           <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
         </ul>
       </div>
