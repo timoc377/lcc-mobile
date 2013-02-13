@@ -13,7 +13,7 @@
     <script src="js/jqm.page.params.js"></script>
     <script src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script>
     <script src="js/jquery.mobile.fixedToolbar.polyfill.js"></script>  
-    <script src="js/eventlist.js"></script>
+    <!--<script src="js/eventlist.js"></script>-->
     <script src="js/eventdetails.js"></script>
     <script src="js/noticelist.js"></script>
     <script src="js/noticedetails.js"></script>  
@@ -40,16 +40,19 @@
         tx.executeSql('SELECT * FROM event', [], events);
       }
       function events(tx, results) {
-        var len = results.rows.length,
-            text = "";
-            console.log(results.rows);
+        for(var i = 0; i < results.rows.length; i++){
+          $('#eventList').append('<li><a href="#eventDetailsPage?id=' + results.rows.item(i).id + '">' +
+            '<h3>' + results.rows.item(i).title + '</h3>' +
+            '<h4>Date/Time: ' + results.rows.item(i).date + '</h4>' +
+            '</a></li>');
+          $('#eventList').listview('refresh');
+        }
       }
       // Query the success callback
       
       function deviceOffline(){
           // If database isn't created then alert the user 
           // that the app initially requires internet to create the database
-
           if(!events){
             alert('This application requires internet to get data. Please enable your wifi or network connection.');
           }
