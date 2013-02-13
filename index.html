@@ -6,7 +6,7 @@
     
     <link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.css">
     <link rel="stylesheet" href="css/jquery.mobile.fixedToolbar.polyfill.css" />
-    <link rel="stylesheet" href="css/styles.css" />s
+    <link rel="stylesheet" href="css/styles.css" />
     
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="js/jqm.page.params.js"></script>
@@ -18,7 +18,13 @@
     <script src="js/noticedetails.js"></script>  
     <script src="js/prayerlist.js"></script>
     <script src="js/prayerdetails.js"></script>
-    
+
+
+    <script>
+      document.addEventListener("online", function() {
+        alert("Internet connection detected");
+      }, false);
+    </script>
   </head>
 
   <body>
