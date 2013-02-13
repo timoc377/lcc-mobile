@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/jquery.mobile.fixedToolbar.polyfill.css" />
     <link rel="stylesheet" href="css/styles.css" />
     
+    <script src="js/cordova.js"></script>
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="js/jqm.page.params.js"></script>
     <script src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script>
@@ -21,9 +22,145 @@
 
 
     <script>
-      document.addEventListener("online", function() {
-        alert("Internet connection detected");
-      }, false);
+      var serviceLocation = "http://m.go2lighthouse.org/services/";
+      var db = window.openDatabase("LCCMobile", "1.0", "LCCMobile", 5000000);
+
+      document.addEventListener("deviceready", deviceReady, false);
+      document.addEventListener("offline", deviceOffline, false);
+      function deviceReady(){
+        db.transaction(setupDB, errorCB, successCB);
+        setupPrayers();
+        setupNotices();
+        setupEvents();
+        test = db.transaction(queryDB, errorCB);
+        console.log(test);
+      }
+
+      function queryDB(tx) {
+        tx.executeSql('SELECT * FROM event', [], events);
+      }
+      function events(tx, results) {
+        var len = results.rows.length,
+            text = "";
+            console.log(results.rows);
+      }
+      // Query the success callback
+      
+      function deviceOffline(){
+          // If database isn't created then alert the user 
+          // that the app initially requires internet to create the database
+
+          if(!events){
+            alert('This application requires internet to get data. Please enable your wifi or network connection.');
+          }
+      } 
+      
+      // PopulateDB
+      function setupDB(tx){
+        tx.executeSql("CREATE TABLE IF NOT EXISTS prayer(id unique,title,request,date)");
+        tx.executeSql("CREATE TABLE IF NOT EXISTS notices(id INTEGER PRIMARY KEY,title,description)");
+        tx.executeSql("CREATE TABLE IF NOT EXISTS event(id INTEGER PRIMARY KEY,venue,catname,date,title,description)");
+
+      }
+
+      function setupPrayers(){
+        $.ajax({
+          type:"POST",
+          dataType: "JSON",
+          url: serviceLocation + 'getprayerrequests.php', 
+          async: false,
+          success:function(data){
+            var prayers = data.items;
+            $.each(prayers, function(index, prayer){
+
+                var id = prayer.id,
+                    title = prayer.title,
+                    request = prayer.request,
+                    date = prayer.date;
+                
+              
+                title = title.replace(/\\/g, '');
+                title = title.replace(/\'/g, '');
+                request = request.replace(/\\/g, '');
+                request = request.replace(/\'/g, '');
+
+                db.transaction(function(tx){
+                  tx.executeSql("INSERT INTO prayer (id, title, request, date) VALUES ("+id+", '"+title+"', '"+request+"', '"+date+"')")
+                },errorCB,successCB);
+            });
+          }
+        });
+      }
+
+      function setupNotices(){
+
+        $.ajax({
+          type:"POST",
+          dataType: "JSON",
+          url: serviceLocation + 'getnotices.php', 
+          async: false,
+          success:function(data){
+            var notices = data.items;
+            $.each(notices, function(index, notice){
+              var title         = notice.title,
+                  id            = notice.id,
+                  description   = notice.description;
+
+                  description = description.replace(/\<p\>/g, '');
+                  description = description.replace(/\<\/p\>/g, '');
+
+              db.transaction(function(tx){
+                tx.executeSql("INSERT INTO notices (id, title,description) VALUES ("+id+", '"+title+"','"+description+"')")
+              },errorCB,successCB);
+            });
+          }
+        });
+
+      }
+      function setupEvents(tx){
+         $.ajax({
+          type:"POST",
+          dataType: "JSON",
+          url: serviceLocation + 'getevents.php', 
+          async: false,
+          success:function(data){
+            var events = data.items;
+            $.each(events, function(index, event){
+              var title = event.title,
+                  id    = event.id,
+                  description = event.datdescription,
+                  venue = event.venue,
+                  date = "",
+                  catname = event.catname;
+
+                  if(event.enddates){
+                    date = event.dates + ' ' + event.times + ' - ' + event.enddates + ' ' + event.endtimes;
+                  } else {
+                    date = event.dates + ' ' + event.times;
+                  }
+
+                  description = description.replace(/\<p\>/g, '');
+                  description = description.replace(/\<\/p\>/g, '');
+    
+              date,description
+              db.transaction(function(tx){
+                tx.executeSql("INSERT INTO event (id,title,venue,catname,date,description) VALUES ("+id+",'"+title+"','"+venue+"','"+catname+"','"+date+"','"+description+"')")
+              },errorCB,successCB);
+            });
+          }
+        });
+      }
+      
+      // Callback for DB population error
+      function errorCB(err) {
+        // alert("Error processing SQL: "+err.code);
+        // console.log(err);
+      }
+      // Callback for DB population success
+      function successCB(){
+        // Success
+      }
+
     </script>
   </head>
 
@@ -50,7 +187,7 @@
 
     <div data-role="content">
       <ul id="eventList" data-role="listview" data-filter="true"></ul>
-    </div>		
+    </div>    
 
    <div data-role="footer" data-position="fixed" data-transition="none">
     <div data-role="navbar" data-theme="b">
@@ -147,9 +284,9 @@
   <div id="noticeListPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
 
 
-  	<div data-role="content">
+    <div data-role="content">
       <ul id="noticeList" data-role="listview" data-filter="true"></ul>
-    </div>		
+    </div>    
 
     <div data-role="footer" data-position="fixed">
       <div data-role="navbar" data-theme="b">
