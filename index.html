@@ -4,21 +4,21 @@
     <title>Lighthouse Moblie Connect</title>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.css">
+    <link rel="stylesheet" href="css/jquery.mobile.css">
     <link rel="stylesheet" href="css/jquery.mobile.fixedToolbar.polyfill.css" />
     <link rel="stylesheet" href="css/styles.css" />
     
     <script src="js/cordova.js"></script>
-    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="js/jquery.js"></script>
     <script src="js/jqm.page.params.js"></script>
-    <script src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script>
+    <script src="js/jquery.mobile.js"></script>
     <script src="js/jquery.mobile.fixedToolbar.polyfill.js"></script>  
     <!--<script src="js/eventlist.js"></script>-->
     <!--<script src="js/eventdetails.js"></script>-->
-    <script src="js/noticelist.js"></script>
-    <script src="js/noticedetails.js"></script>  
-    <script src="js/prayerlist.js"></script>
-    <script src="js/prayerdetails.js"></script>
+    <!--<script src="js/noticelist.js"></script>-->
+    <!--<script src="js/noticedetails.js"></script>  -->
+    <!--<script src="js/prayerlist.js"></script>-->
+    <!--<script src="js/prayerdetails.js"></script>-->
 
 
     <script>
@@ -30,11 +30,7 @@
       document.addEventListener("deviceready", deviceReady, false);
       document.addEventListener("offline", deviceOffline, false);
 
-      $(document).bind("pagebeforechange", function( event, data ) {
-      $.mobile.pageData = (data && data.options && data.options.pageData)
-          ? data.options.pageData
-          : null;
-      });
+     
 
       $(function(){
         deviceReady();        
@@ -48,45 +44,82 @@
         db.transaction(getChurchEvents, errorCB);
       }
       
-      // Notices
-      $('#noticeListPage').live('pageshow', function(e) {
-          noticeId = $.mobile.pageData.id;
-          db.transaction(getNotices, errorCB);
+      $(document).bind("pagebeforechange", function( event, data ) {
+        $.mobile.pageData = (data && data.options && data.options.pageData)
+            ? data.options.pageData
+            : null;
       });
 
-      $('#noticeDetailsPage').live('pageshow', function(event) {
+      // // Prayers
+      // $('#prayerListPage').live('pageshow', function(e) {
+      //     db.transaction(getPrayers, errorCB);
+      // });
+
+      // $('#prayerDetailsPage').live('pageshow', function(event) {
+      //   prayerId = $.mobile.pageData.id;
+      //   db.transaction(getPrayer, errorCB);
+      // });
+
+      // function getPrayer(tx) {
+      //   tx.executeSql('SELECT * FROM prayer WHERE id = ?', [prayerId], churchEvent, errorCB);
+      // }
+
+      // function getPrayer(tx, results){
+      //   $('#prayerTitle').text(results.rows.item(0).title);
+      //   $('#prayerDescription').text(results.rows.item(0).request);
+      //   $('#prayerDate').text(results.rows.item(0).date);
+      //   $('#prayerDetails').listview('refresh');  
+      // }
+
+      // function getPrayers(tx) {
+      //   tx.executeSql('SELECT * FROM prayer', [], getChurchNotices);
+      // }
+
+      // function getChurchNotices(tx, results) {
+      //   for(var i = 0; i < results.rows.length; i++){
+      //     $('#prayerList').append('<li><a href="#prayerDetailsPage?id=' + results.rows.item(i).id + '">' +
+      //       '<h3>' + results.rows.item(i).title + '</h3>' +
+      //       '</a></li>');
+      //   }
+      // }
+      // // End Notices
+
+      // Notices
+      $('#noticeListPage').live('pagebeforeshow', function(e) {
+          db.transaction(getChurchNotices, errorCB);
+      });
+
+      $('#noticeDetailsPage').live('pagebeforeshow', function(event) {
         noticeId = $.mobile.pageData.id;
-        $.getJSON(serviceURL + 'getnotice.php?id='+id, displayNotice);
+        db.transaction(getChurchNotice, errorCB);
       });
 
       function getChurchNotice(tx) {
-        tx.executeSql('SELECT * FROM event WHERE id = ?', [eventId], churchEvent, errorCB);
+        tx.executeSql('SELECT * FROM event WHERE id = ?', [eventId], churchNotice, errorCB);
       }
 
       function churchNotice(tx, results){
-        $('#eventTitle').text(results.rows.item(0).title);
-        $('#eventStartDateTime').text('Date/Time: ' + results.rows.item(0).date);
-        $('#eventVenue').text('Location: ' + results.rows.item(0).venue);
-        $('#eventCategory').text('Category: ' + results.rows.item(0).catname);
-        $('#eventDescription').text(results.rows.item(0).description);
-        $('#eventEventList').listview('refresh');
+        $('#noticeTitle').html(results.rows.item(0).title);
+        $('#noticeDescription').html(results.rows.item(0).description + '<br /><br />');
+        $('#noticeList').listview('refresh');
+      }
+      function getChurchNotices(tx) {
+        tx.executeSql('SELECT * FROM notices', [], churchNotices);
       }
 
-      function getNotices(tx) {
-        tx.executeSql('SELECT * FROM notices', [], getChurchNotices);
-      }
-
-      function getChurchNotices(tx, results) {
+      function churchNotices(tx, results) {
+        $('#noticeList').html('');
         for(var i = 0; i < results.rows.length; i++){
           $('#noticeList').append('<li><a href="#noticeDetailsPage?id=' + results.rows.item(i).id + '">' +
             '<h3>' + results.rows.item(i).title + '</h3>' +
             '</a></li>');
+          $('#noticeList').listview('refresh');
         }
       }
       // End Notices
 
       // Events
-      $('#eventDetailsPage').live('pageshow', function(e) {
+      $('#eventDetailsPage').live('pagebeforeshow', function(e) {
         eventId = $.mobile.pageData.id;
         db.transaction(getChurchEvent, errorCB);
       });
@@ -97,11 +130,11 @@
 
       function churchEvent(tx, results){
         $('#eventTitle').html(results.rows.item(0).title);
-        $('#eventStartDateTime').html('Date/Time:<br /><br />' + results.rows.item(0).date + '<br /><br />');
-        $('#eventVenue').html('Location:<br /><br />' + results.rows.item(0).venue + '<br /><br />');
-        $('#eventCategory').html('Category: ' + results.rows.item(0).catname + '<br /><br />');
+        $('#eventStartDateTime').html('<b>Date/Time:</b><br /><br />' + results.rows.item(0).date + '<br /><br />');
+        $('#eventVenue').html('<b>Location:</b><br /><br />' + results.rows.item(0).venue + '<br /><br />');
+        $('#eventCategory').html('<b>Category:</b><br /><br />' + results.rows.item(0).catname + '<br /><br />');
         $('#eventDescription').html(results.rows.item(0).description + '<br /><br />');
-        $('#eventEventList').listview('refresh');
+        $('#eventList').listview('refresh');
       }
 
       function getChurchEvents(tx) {
@@ -225,12 +258,13 @@
       // Callback for DB population error
       function errorCB(err) {
         // alert("Error processing SQL: "+err.code);
-        // console.log(err);
+        console.log(err);
       }
       // Callback for DB population success
       function successCB(){
         // Success
       }
+
 
     </script>
   </head>
@@ -258,9 +292,9 @@
 
     <div data-role="content">
       <ul id="eventList" data-role="listview" data-filter="true"></ul>
-    </div>		
+    </div>    
 
-   <div data-role="footer" data-position="fixed" data-transition="none">
+   <div data-role="footer" data-position="fixed">
     <div data-role="navbar" data-theme="b">
       <ul style="display:block; height: 60px;">
         <!-- <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li> -->
@@ -273,12 +307,12 @@
   </div> <!-- eventListPage -->
 
   <div id="eventDetailsPage" data-role="page" data-theme="b" data-content-theme="c"  data-add-back-btn="false">
-    <div data-role="navbar">
-     <a data-rel="back">Back</a>
+    <div data-role="header">
+     <a data-rel="back">Back</a><h1></h1>
     </div>
 
     <div data-role="content"> 
-
+      <br />
       <div id="eventDetails">
        <h3 id="eventTitle"></h3>
        <p id="eventStartDateTime"></p>
@@ -324,12 +358,12 @@
 
   <div id="prayerDetailsPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
 
-      <div data-role="navbar">
-        <a data-rel="back">Back</a>
-      </div>
+    <div data-role="header">
+     <a data-rel="back">Back</a><h1></h1>
+    </div>
 
       <div data-role="content"> 
-
+        <br />
         <div id="prayerDetails">
          <h3 id="prayerTitle"></h3>
          <p id="prayerDescription"></p>
@@ -355,9 +389,9 @@
   <div id="noticeListPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
 
 
-  	<div data-role="content">
+    <div data-role="content">
       <ul id="noticeList" data-role="listview" data-filter="true"></ul>
-    </div>		
+    </div>    
 
     <div data-role="footer" data-position="fixed">
       <div data-role="navbar" data-theme="b">
@@ -372,9 +406,11 @@
   </div> <!-- noticeListPage -->
 
   <div id="noticeDetailsPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
-
+      <div data-role="header">
+       <a data-rel="back">Back</a><h1></h1>
+      </div>
       <div data-role="content"> 
-
+        <br />
         <div id="noticeDetails">
          <h3 id="noticeTitle"></h3>
          <p id="noticeDescription"></p>
