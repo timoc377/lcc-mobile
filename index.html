@@ -14,7 +14,7 @@
     <script src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script>
     <script src="js/jquery.mobile.fixedToolbar.polyfill.js"></script>  
     <!--<script src="js/eventlist.js"></script>-->
-    <script src="js/eventdetails.js"></script>
+    <!--<script src="js/eventdetails.js"></script>-->
     <script src="js/noticelist.js"></script>
     <script src="js/noticedetails.js"></script>  
     <script src="js/prayerlist.js"></script>
@@ -24,22 +24,91 @@
     <script>
       var serviceLocation = "http://m.go2lighthouse.org/services/";
       var db = window.openDatabase("LCCMobile", "1.0", "LCCMobile", 5000000);
+      var eventId = "";
+      var noticeId = "";
 
       document.addEventListener("deviceready", deviceReady, false);
       document.addEventListener("offline", deviceOffline, false);
+
+      $(document).bind("pagebeforechange", function( event, data ) {
+      $.mobile.pageData = (data && data.options && data.options.pageData)
+          ? data.options.pageData
+          : null;
+      });
+
+      $(function(){
+        deviceReady();        
+      });
+
       function deviceReady(){
         db.transaction(setupDB, errorCB, successCB);
         setupPrayers();
         setupNotices();
         setupEvents();
-        test = db.transaction(queryDB, errorCB);
-        console.log(test);
+        db.transaction(getChurchEvents, errorCB);
+      }
+      
+      // Notices
+      $('#noticeListPage').live('pageshow', function(e) {
+          noticeId = $.mobile.pageData.id;
+          db.transaction(getNotices, errorCB);
+      });
+
+      $('#noticeDetailsPage').live('pageshow', function(event) {
+        noticeId = $.mobile.pageData.id;
+        $.getJSON(serviceURL + 'getnotice.php?id='+id, displayNotice);
+      });
+
+      function getChurchNotice(tx) {
+        tx.executeSql('SELECT * FROM event WHERE id = ?', [eventId], churchEvent, errorCB);
       }
 
-      function queryDB(tx) {
-        tx.executeSql('SELECT * FROM event', [], events);
+      function churchNotice(tx, results){
+        $('#eventTitle').text(results.rows.item(0).title);
+        $('#eventStartDateTime').text('Date/Time: ' + results.rows.item(0).date);
+        $('#eventVenue').text('Location: ' + results.rows.item(0).venue);
+        $('#eventCategory').text('Category: ' + results.rows.item(0).catname);
+        $('#eventDescription').text(results.rows.item(0).description);
+        $('#eventEventList').listview('refresh');
       }
-      function events(tx, results) {
+
+      function getNotices(tx) {
+        tx.executeSql('SELECT * FROM notices', [], getChurchNotices);
+      }
+
+      function getChurchNotices(tx, results) {
+        for(var i = 0; i < results.rows.length; i++){
+          $('#noticeList').append('<li><a href="#noticeDetailsPage?id=' + results.rows.item(i).id + '">' +
+            '<h3>' + results.rows.item(i).title + '</h3>' +
+            '</a></li>');
+        }
+      }
+      // End Notices
+
+      // Events
+      $('#eventDetailsPage').live('pageshow', function(e) {
+        eventId = $.mobile.pageData.id;
+        db.transaction(getChurchEvent, errorCB);
+      });
+
+      function getChurchEvent(tx) {
+        tx.executeSql('SELECT * FROM event WHERE id = ?', [eventId], churchEvent, errorCB);
+      }
+
+      function churchEvent(tx, results){
+        $('#eventTitle').html(results.rows.item(0).title);
+        $('#eventStartDateTime').html('Date/Time:<br /><br />' + results.rows.item(0).date + '<br /><br />');
+        $('#eventVenue').html('Location:<br /><br />' + results.rows.item(0).venue + '<br /><br />');
+        $('#eventCategory').html('Category: ' + results.rows.item(0).catname + '<br /><br />');
+        $('#eventDescription').html(results.rows.item(0).description + '<br /><br />');
+        $('#eventEventList').listview('refresh');
+      }
+
+      function getChurchEvents(tx) {
+        tx.executeSql('SELECT * FROM event', [], churchEvents);
+      }
+
+      function churchEvents(tx, results) {
         for(var i = 0; i < results.rows.length; i++){
           $('#eventList').append('<li><a href="#eventDetailsPage?id=' + results.rows.item(i).id + '">' +
             '<h3>' + results.rows.item(i).title + '</h3>' +
@@ -48,8 +117,7 @@
           $('#eventList').listview('refresh');
         }
       }
-      // Query the success callback
-      
+      // End Events
       function deviceOffline(){
           // If database isn't created then alert the user 
           // that the app initially requires internet to create the database
@@ -190,7 +258,7 @@
 
     <div data-role="content">
       <ul id="eventList" data-role="listview" data-filter="true"></ul>
-    </div>    
+    </div>		
 
    <div data-role="footer" data-position="fixed" data-transition="none">
     <div data-role="navbar" data-theme="b">
@@ -287,9 +355,9 @@
   <div id="noticeListPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
 
 
-    <div data-role="content">
+  	<div data-role="content">
       <ul id="noticeList" data-role="listview" data-filter="true"></ul>
-    </div>    
+    </div>		
 
     <div data-role="footer" data-position="fixed">
       <div data-role="navbar" data-theme="b">
