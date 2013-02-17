@@ -13,19 +13,13 @@
     <script src="js/jqm.page.params.js"></script>
     <script src="js/jquery.mobile.js"></script>
     <script src="js/jquery.mobile.fixedToolbar.polyfill.js"></script>  
-    <!--<script src="js/eventlist.js"></script>-->
-    <!--<script src="js/eventdetails.js"></script>-->
-    <!--<script src="js/noticelist.js"></script>-->
-    <!--<script src="js/noticedetails.js"></script>  -->
-    <!--<script src="js/prayerlist.js"></script>-->
-    <!--<script src="js/prayerdetails.js"></script>-->
-
 
     <script>
-      var serviceLocation = "http://m.go2lighthouse.org/services/";
-      var db = window.openDatabase("LCCMobile", "1.0", "LCCMobile", 5000000);
-      var eventId = "";
-      var noticeId = "";
+      var serviceLocation = "http://m.go2lighthouse.org/services/",            
+          db = window.openDatabase("LCCMobile", "1.0", "LCCMobile", 5000000),
+          eventId = 0,                                                                                                            
+          noticeId = 0,                                                                                                          
+          prayerId = 0;                                                                                                          
 
       document.addEventListener("deviceready", deviceReady, false);
       document.addEventListener("offline", deviceOffline, false);
@@ -50,39 +44,32 @@
             : null;
       });
 
-      // // Prayers
-      // $('#prayerListPage').live('pageshow', function(e) {
-      //     db.transaction(getPrayers, errorCB);
-      // });
+      // Prayers
+      $('#prayerListPage').live('pagebeforeshow', function(e) {
+          db.transaction(prayers, errorCB);
+      });
 
-      // $('#prayerDetailsPage').live('pageshow', function(event) {
-      //   prayerId = $.mobile.pageData.id;
-      //   db.transaction(getPrayer, errorCB);
-      // });
+      $('#prayerDetailsPage').live('pagebeforeshow', function(event) {
+        prayerId = $.mobile.pageData.id;
+        console.log(prayerId);
+        // db.transaction(prayer, errorCB);
+      });
 
-      // function getPrayer(tx) {
-      //   tx.executeSql('SELECT * FROM prayer WHERE id = ?', [prayerId], churchEvent, errorCB);
-      // }
 
-      // function getPrayer(tx, results){
-      //   $('#prayerTitle').text(results.rows.item(0).title);
-      //   $('#prayerDescription').text(results.rows.item(0).request);
-      //   $('#prayerDate').text(results.rows.item(0).date);
-      //   $('#prayerDetails').listview('refresh');  
-      // }
+      function prayers(tx) {
+        tx.executeSql('SELECT * FROM prayer', [], getPrayers);
+      }
 
-      // function getPrayers(tx) {
-      //   tx.executeSql('SELECT * FROM prayer', [], getChurchNotices);
-      // }
-
-      // function getChurchNotices(tx, results) {
-      //   for(var i = 0; i < results.rows.length; i++){
-      //     $('#prayerList').append('<li><a href="#prayerDetailsPage?id=' + results.rows.item(i).id + '">' +
-      //       '<h3>' + results.rows.item(i).title + '</h3>' +
-      //       '</a></li>');
-      //   }
-      // }
-      // // End Notices
+      function getPrayers(tx, results) {
+        $('#prayerList').html('');
+        for(var i = 0; i < results.rows.length; i++){
+          $('#prayerList').append('<li><a href="#prayerDetailsPage?id=' + results.rows.item(i).id + '">' +
+            '<h3>' + results.rows.item(i).title + '</h3>' +
+            '</a></li>');
+          $('#prayerList').listview('refresh');  
+        }
+      }
+      // End Prayers
 
       // Notices
       $('#noticeListPage').live('pagebeforeshow', function(e) {
@@ -95,13 +82,12 @@
       });
 
       function getChurchNotice(tx) {
-        tx.executeSql('SELECT * FROM event WHERE id = ?', [eventId], churchNotice, errorCB);
+        tx.executeSql('SELECT * FROM notices WHERE id = ?', [noticeId], churchNotice, errorCB);
       }
 
       function churchNotice(tx, results){
         $('#noticeTitle').html(results.rows.item(0).title);
         $('#noticeDescription').html(results.rows.item(0).description + '<br /><br />');
-        $('#noticeList').listview('refresh');
       }
       function getChurchNotices(tx) {
         tx.executeSql('SELECT * FROM notices', [], churchNotices);
@@ -121,20 +107,19 @@
       // Events
       $('#eventDetailsPage').live('pagebeforeshow', function(e) {
         eventId = $.mobile.pageData.id;
-        db.transaction(getChurchEvent, errorCB);
+        db.transaction(churchEvent, errorCB);
       });
 
-      function getChurchEvent(tx) {
-        tx.executeSql('SELECT * FROM event WHERE id = ?', [eventId], churchEvent, errorCB);
+      function churchEvent(tx) {
+        tx.executeSql('SELECT * FROM event WHERE id = ?', [eventId], getChurchEvent, errorCB);
       }
 
-      function churchEvent(tx, results){
+      function getChurchEvent(tx, results){
         $('#eventTitle').html(results.rows.item(0).title);
         $('#eventStartDateTime').html('<b>Date/Time:</b><br /><br />' + results.rows.item(0).date + '<br /><br />');
         $('#eventVenue').html('<b>Location:</b><br /><br />' + results.rows.item(0).venue + '<br /><br />');
         $('#eventCategory').html('<b>Category:</b><br /><br />' + results.rows.item(0).catname + '<br /><br />');
         $('#eventDescription').html(results.rows.item(0).description + '<br /><br />');
-        $('#eventList').listview('refresh');
       }
 
       function getChurchEvents(tx) {
@@ -147,8 +132,8 @@
             '<h3>' + results.rows.item(i).title + '</h3>' +
             '<h4>Date/Time: ' + results.rows.item(i).date + '</h4>' +
             '</a></li>');
-          $('#eventList').listview('refresh');
         }
+        $('#eventList').listview('refresh');
       }
       // End Events
       function deviceOffline(){
@@ -161,6 +146,10 @@
       
       // PopulateDB
       function setupDB(tx){
+        tx.executeSql('DROP TABLE IF EXISTS prayer');
+        tx.executeSql('DROP TABLE IF EXISTS notices');
+        tx.executeSql('DROP TABLE IF EXISTS event');
+
         tx.executeSql("CREATE TABLE IF NOT EXISTS prayer(id unique,title,request,date)");
         tx.executeSql("CREATE TABLE IF NOT EXISTS notices(id INTEGER PRIMARY KEY,title,description)");
         tx.executeSql("CREATE TABLE IF NOT EXISTS event(id INTEGER PRIMARY KEY,venue,catname,date,title,description)");
@@ -177,7 +166,7 @@
             var prayers = data.items;
             $.each(prayers, function(index, prayer){
 
-                var id = prayer.id,
+                var id = index+1,
                     title = prayer.title,
                     request = prayer.request,
                     date = prayer.date;
@@ -207,7 +196,7 @@
             var notices = data.items;
             $.each(notices, function(index, notice){
               var title         = notice.title,
-                  id            = notice.id,
+                  id            = index+1,
                   description   = notice.description;
 
                   description = description.replace(/\<p\>/g, '');
@@ -231,10 +220,10 @@
             var events = data.items;
             $.each(events, function(index, event){
               var title = event.title,
-                  id    = event.id,
                   description = event.datdescription,
+                  id = index + 1,
                   venue = event.venue,
-                  date = "",
+                  date = '',
                   catname = event.catname;
 
                   if(event.enddates){
@@ -245,10 +234,9 @@
 
                   description = description.replace(/\<p\>/g, '');
                   description = description.replace(/\<\/p\>/g, '');
-    
-              date,description
+  
               db.transaction(function(tx){
-                tx.executeSql("INSERT INTO event (id,title,venue,catname,date,description) VALUES ("+id+",'"+title+"','"+venue+"','"+catname+"','"+date+"','"+description+"')")
+                tx.executeSql('INSERT INTO event (id,description, title,date,venue,catname) VALUES ("'+id+'","'+description+'","'+title+'","'+date+'","'+venue+'","'+catname+'")')
               },errorCB,successCB);
             });
           }
@@ -368,7 +356,6 @@
          <h3 id="prayerTitle"></h3>
          <p id="prayerDescription"></p>
          <p id="prayerDate"></p>
-         <p id="prayerList"></p>
         </div>
 
      </div>

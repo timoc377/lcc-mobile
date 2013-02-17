@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
 
-$sql = "SELECT id, title " . 
+$sql = "SELECT id, title, description " . 
 		"FROM jos_noticeboard " . 
 		"WHERE published = 1";
 
