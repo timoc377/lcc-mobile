@@ -161,6 +161,7 @@
             '<h4>Date/Time: ' + results.rows.item(i).date + '</h4>' +
             '</a></li>');
         }
+        $('#eventList').listview('refresh');
       }
       // End Events
       function deviceOffline(){
