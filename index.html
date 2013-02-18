@@ -29,25 +29,23 @@
     
     <script src="js/cordova.js"></script>
     <script src="js/jquery.js"></script>
+    <script type="text/javascript">
+      $(document).on("mobileinit", function () {
+
+          // Setting #container div as a jqm pageContainer
+          $.mobile.pageContainer = $('#container');
+          // Setting default page transition to slide
+          $.mobile.defaultPageTransition = 'slide';
+      });
+    </script>
     <script src="js/jqm.page.params.js"></script>
     <script src="js/jquery.mobile.js"></script>
-     <script type="text/javascript">
-        $(document).on("mobileinit", function () {
- 
-            // Setting #container div as a jqm pageContainer
-            $.mobile.pageContainer = $('#container');
- 
-            // Setting default page transition to slide
-            $.mobile.defaultPageTransition = 'slide';
- 
-        });
-    </script>
-    <script src="js/jquery.mobile.fixedToolbar.polyfill.js"></script>  
+    <script src="js/jquery.mobile.fixedToolbar.polyfill.js"></script>
 
     <script>
       var serviceLocation = "http://m.go2lighthouse.org/services/",            
           db = window.openDatabase("LCCMobile", "1.0", "LCCMobile", 5000000),
-          eventId = 0,                                                                                                            
+          eventId = 0,                                                   
           noticeId = 0,                                                                                                          
           prayerId = 0;                                                                                                          
 
