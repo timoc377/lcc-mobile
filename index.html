@@ -38,7 +38,7 @@
           // Setting #container div as a jqm pageContainer
           $.mobile.pageContainer = $('#container');
           // Setting default page transition to slide
-          $.mobile.defaultPageTransition = 'slide';
+          $.mobile.defaultPageTransition = 'none';
       });
     </script>
     <script src="js/jqm.page.params.js"></script>
@@ -82,12 +82,11 @@
 
       $('#prayerDetailsPage').live('pagebeforeshow', function(event) {
         prayerId = $.mobile.pageData.id;
-        console.log(prayerId);
         db.transaction(prayer, errorCB);
       });
 
       function prayer(tx){
-        tx.executeSql('SELECT * FROM prayer WHERE id = ?', [prayerId], getPrayers);
+        tx.executeSql('SELECT * FROM prayers WHERE id = ?', [prayerId], getPrayer);
       }
       function getPrayer(tx, results){
         $('#prayerTitle').html(results.rows.item(0).title);
@@ -96,7 +95,7 @@
       }
 
       function prayers(tx) {
-        tx.executeSql('SELECT * FROM prayer', [], getPrayers);
+        tx.executeSql('SELECT * FROM prayers', [], getPrayers);
       }
 
       function getPrayers(tx, results) {
@@ -150,7 +149,7 @@
       });
 
       function churchEvent(tx) {
-        tx.executeSql('SELECT * FROM event WHERE id = ?', [eventId], getChurchEvent, errorCB);
+        tx.executeSql('SELECT * FROM events WHERE id = ?', [eventId], getChurchEvent, errorCB);
       }
 
       function getChurchEvent(tx, results){
@@ -162,7 +161,7 @@
       }
 
       function getChurchEvents(tx) {
-        tx.executeSql('SELECT * FROM event', [], churchEvents);
+        tx.executeSql('SELECT * FROM events', [], churchEvents);
       }
 
       function churchEvents(tx, results) {
@@ -185,13 +184,14 @@
       
       // PopulateDB
       function setupDB(tx){
-        tx.executeSql('DROP TABLE IF EXISTS prayer');
+        tx.executeSql('DROP TABLE IF EXISTS prayers');
         tx.executeSql('DROP TABLE IF EXISTS notices');
         tx.executeSql('DROP TABLE IF EXISTS event');
+        tx.executeSql('DROP TABLE IF EXISTS events');
 
-        tx.executeSql("CREATE TABLE IF NOT EXISTS prayer(id unique,title,request,date)");
+        tx.executeSql("CREATE TABLE IF NOT EXISTS prayers(id unique,title,request,date)");
         tx.executeSql("CREATE TABLE IF NOT EXISTS notices(id INTEGER PRIMARY KEY,title,description)");
-        tx.executeSql("CREATE TABLE IF NOT EXISTS event(id INTEGER PRIMARY KEY,venue,catname,date,title,description)");
+        tx.executeSql("CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY,venue,catname,date,title,description)");
 
       }
 
@@ -204,20 +204,18 @@
           success:function(data){
             var prayers = data.items;
             $.each(prayers, function(index, prayer){
-
-                var id = index+1,
-                    title = prayer.title,
+                  var id    = index+1,
+                    title   = prayer.title,
                     request = prayer.request,
-                    date = prayer.date;
-                
-              
+                    date    = prayer.date;
+
                 title = title.replace(/\\/g, '');
                 title = title.replace(/\'/g, '');
                 request = request.replace(/\\/g, '');
                 request = request.replace(/\'/g, '');
 
                 db.transaction(function(tx){
-                  tx.executeSql("INSERT INTO prayer (id, title, request, date) VALUES ("+id+", '"+title+"', '"+request+"', '"+date+"')")
+                  tx.executeSql("INSERT INTO prayers (id, title, request, date) VALUES ("+id+", '"+title+"', '"+request+"', '"+date+"')")
                 },errorCB,successCB);
             });
           }
@@ -275,7 +273,7 @@
                   description = description.replace(/\<\/p\>/g, '');
   
               db.transaction(function(tx){
-                tx.executeSql('INSERT INTO event (id,description, title,date,venue,catname) VALUES ("'+id+'","'+description+'","'+title+'","'+date+'","'+venue+'","'+catname+'")')
+                tx.executeSql('INSERT INTO events (id,description, title,date,venue,catname) VALUES ("'+id+'","'+description+'","'+title+'","'+date+'","'+venue+'","'+catname+'")')
               },errorCB,successCB);
             });
           }
