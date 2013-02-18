@@ -83,9 +83,17 @@
       $('#prayerDetailsPage').live('pagebeforeshow', function(event) {
         prayerId = $.mobile.pageData.id;
         console.log(prayerId);
-        // db.transaction(prayer, errorCB);
+        db.transaction(prayer, errorCB);
       });
 
+      function prayer(tx){
+        tx.executeSql('SELECT * FROM prayer WHERE id = ?', [prayerId], getPrayers);
+      }
+      function getPrayer(tx, results){
+        $('#prayerTitle').html(results.rows.item(0).title);
+        $('#prayerDescription').html(results.rows.item(0).request);
+        $('#prayerDate').html(results.rows.item(0).date);
+      }
 
       function prayers(tx) {
         tx.executeSql('SELECT * FROM prayer', [], getPrayers);
