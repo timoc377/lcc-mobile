@@ -244,9 +244,8 @@
       
       // Callback for DB population error
       function errorCB(err) {
-        // alert("Error processing SQL: "+err.code);
+        alert("Error ÷processing SQL: "+err.message);
         console.log(err);
-        alert(err.code)
         return true;
       }
       // Callback for DB population success
