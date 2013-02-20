@@ -3,8 +3,10 @@
   <head>
     <title>Lighthouse Moblie Connect</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
     <link rel="stylesheet" href="css/jquery.mobile.css">
     <link rel="stylesheet" href="css/styles.css" />
+
     <script src="js/cordova.js"></script>
     <script src="js/jquery.js"></script>
     <script src="js/jqm.page.params.js"></script>
@@ -244,6 +246,7 @@
       function errorCB(err) {
         // alert("Error processing SQL: "+err.code);
         console.log(err);
+        alert(err.code)
         return true;
       }
       // Callback for DB population success
