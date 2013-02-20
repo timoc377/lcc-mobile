@@ -5,30 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <link rel="stylesheet" href="css/jquery.mobile.css">
-    <!-- <link rel="stylesheet" href="/css/jquery.mobile.simultaneous-transitions.css"/> -->
-    <link rel="stylesheet" href="css/styles.css" />
+    <!-- <link rel="stylesheet" href="css/styles.css" /> -->
 
     <script src="js/cordova.js"></script>
     <script src="js/jquery.js"></script>
-    
-    <!--<script src="/js/jquery.mobile-transition-handler-simple.js"></script>-->
-    <!--<script src="/js/jquery.mobile.simultaneous-transitions-replace-simple.js"></script>-->
-
     <script type="text/javascript">
-        $(document).on('mobileinit', function () {
-            $.mobile.pageContainer = $('#container');
-            $.mobile.defaultPageTransition = 'slide';
-            $.mobile.defaultDialogTransition = 'none';
-            $.mobile.buttonMarkup.hoverDelay = 0;
-        });
+        // $(document).on('mobileinit', function () {
+        //     $.mobile.pageContainer = $('#container');
+        //     $.mobile.defaultPageTransition = 'slide';
+        //     $.mobile.defaultDialogTransition = 'slide';
+        //     $.mobile.buttonMarkup.hoverDelay = 0;
+        // });
     </script>
     <script src="js/jqm.page.params.js"></script>
     <script src="js/jquery.mobile.js"></script>
 
     <script>
       var serviceLocation = "http://m.go2lighthouse.org/services/",            
-          db = window.openDatabase("LCCMobile", "1.0", "LCCMobile", 5000000),
-          eventId = 0,                                                   
+          db       = window.openDatabase("LCCMobile", "1.0", "LCCMobile", 5000000),
+          eventId  = 0,                                                   
           noticeId = 0,                                                                                                          
           prayerId = 0;                                                                                                          
 
