@@ -188,8 +188,7 @@
             tx.executeSql("CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY,venue,catname,date,title,description)");
           },
           error: function(){
-            navigator.notification.alert("This application requires internet to get data. Please note, due to this limitation your data may be out of sync. Please enable your wifi or network connection to correct this problem.", 
-                  , 'Warning: No internet connection', 'Done');
+            navigator.notification.alert("This application requires internet to get data. Please note, due to this limitation your data may be out of sync. Please enable your wifi or network connection to correct this problem.",function(){}, 'Warning: No internet connection', 'Done');
           }
         });
 
