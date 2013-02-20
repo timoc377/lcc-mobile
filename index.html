@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <link rel="stylesheet" href="css/jquery.mobile.css">
+    <link rel="stylesheet" href="css/styles.css" />
     <style type="text/css">
  
         /* Setting body margins to 0 to have proper positioning of #container div */
@@ -19,7 +20,6 @@
         }
  
     </style>
-
     <script src="js/cordova.js"></script>
     <script src="js/jquery.js"></script>
     <script type="text/javascript">
@@ -41,7 +41,6 @@
           prayerId = 0;                                                                                                          
 
       document.addEventListener("deviceready", deviceReady, false);
-      document.addEventListener("offline", deviceOffline, false);
 
       $(function(){
         deviceReady();        
@@ -170,23 +169,28 @@
         eventList.listview('refresh');
       }
       // End Events
-      function deviceOffline(){
-          // If database isn't created then alert the user 
-          // that the app initially requires internet to create the database
-          if(!events){
-            alert('This application requires internet to get data. Please enable your wifi or network connection.');
-          }
-      } 
       
       // PopulateDB
       function setupDB(tx){
-        tx.executeSql('DROP TABLE IF EXISTS prayers');
-        tx.executeSql('DROP TABLE IF EXISTS notices');
-        tx.executeSql('DROP TABLE IF EXISTS events');
 
-        tx.executeSql("CREATE TABLE IF NOT EXISTS prayers(id INTEGER PRIMARY KEY,title,request,date)");
-        tx.executeSql("CREATE TABLE IF NOT EXISTS notices(id INTEGER PRIMARY KEY,title,description)");
-        tx.executeSql("CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY,venue,catname,date,title,description)");
+        $.ajax({
+          type: "POST",
+          dataType:"JSON",
+          url: serviceLocation + 'getprayerrequests.php',
+          success: function(e){
+            tx.executeSql('DROP TABLE IF EXISTS prayers');
+            tx.executeSql('DROP TABLE IF EXISTS notices');
+            tx.executeSql('DROP TABLE IF EXISTS events');
+            
+            tx.executeSql("CREATE TABLE IF NOT EXISTS prayers(id INTEGER PRIMARY KEY,title,request,date)");
+            tx.executeSql("CREATE TABLE IF NOT EXISTS notices(id INTEGER PRIMARY KEY,title,description)");
+            tx.executeSql("CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY,venue,catname,date,title,description)");
+          },
+          error: function(){
+            alert("This application requires internet to get data. Please note, due to this limitation your data may be out of sync. Please enable your wifi or network connection to correct this problem.")
+          }
+        });
+
 
       }
 
