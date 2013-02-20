@@ -92,8 +92,6 @@
 
       function churchNotices(tx, results) {
         $('#noticeList').html('');
-        alert('results');
-        alert(results);
         for(var i = 0; i < results.rows.length; i++){
           $('#noticeList').append('<li><a href="#noticeDetailsPage?id=' + results.rows.item(i).id + '">' +
             '<h3>' + results.rows.item(i).title + '</h3>' +
@@ -250,11 +248,30 @@
       function successCB(){
         // Success
       }
+
+
     </script>
   </head>
 
   <body>
   <div id="container">
+  <!-- <div id="landingPage" data-role="page" style="background:transparent url('images/bg.jpg') center center no-repeat;">
+    <div data-role="content">
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+      <div data-role="navbar" data-theme="b">
+        <ul>
+          <li><a href="#landingPage" data-role="button" data-theme="b" data-icon="home">Home</a></li>
+          <li><a href="#eventListPage" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
+          <li><a href="#" data-role="button" data-theme="b" data-icon="star">Prayer</a></li>
+          <li><a href="#noticeListPage" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div> --> <!-- landingPage -->
+
   <div id="eventListPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
 
     <div data-role="content">
