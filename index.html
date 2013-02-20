@@ -12,12 +12,12 @@
     <link rel="stylesheet" href="css/styles.css" />
     <style type="text/css">
  
-        /* Setting body margins to 0 to have proper positioning of #container div */
         body {
+            /* Setting body margins to 0 to have proper positioning of #container div */
             margin: 0;
         }
  
-        /* #container div with absolute position and 100% width and height so it takes up whole window */
+            /* #container div with absolute position and 100% width and height so it takes up whole window */
         #container {
             position: absolute;
             width: 100%;
@@ -55,6 +55,8 @@
       document.addEventListener("deviceready", deviceReady, false);
       document.addEventListener("offline", deviceOffline, false);
 
+     
+
       $(function(){
         deviceReady();        
       });
@@ -75,34 +77,34 @@
 
       // Prayers
       $('#prayerListPage').live('pagebeforeshow', function(e) {
-          db.transaction(getPrayers, errorCB);
+          db.transaction(prayers, errorCB);
       });
 
-      $('#prayerDetailsPage').live('pagebeforeshow', function(e) {
+      $('#prayerDetailsPage').live('pagebeforeshow', function(event) {
         prayerId = $.mobile.pageData.id;
-        db.transaction(getPrayer, errorCB);
+        db.transaction(prayer, errorCB);
       });
 
-      function getPrayer(tx) {
-        tx.executeSql('SELECT * FROM prayers WHERE id = ?', [prayerId], prayer, errorCB);
+      function prayer(tx){
+        tx.executeSql('SELECT * FROM prayers WHERE id = ?', [prayerId], getPrayer);
       }
-
-      function prayer(tx, results){
+      function getPrayer(tx, results){
         $('#prayerTitle').html(results.rows.item(0).title);
         $('#prayerDescription').html(results.rows.item(0).request);
         $('#prayerDate').html(results.rows.item(0).date);
       }
-      function getPrayers(tx) {
-        tx.executeSql('SELECT * FROM prayers', [], getPrayerRequests);
+
+      function prayers(tx) {
+        tx.executeSql('SELECT * FROM prayers', [], getPrayers);
       }
 
-      function getPrayerRequests(tx, results) {
+      function getPrayers(tx, results) {
         $('#prayerList').html('');
         for(var i = 0; i < results.rows.length; i++){
           $('#prayerList').append('<li><a href="#prayerDetailsPage?id=' + results.rows.item(i).id + '">' +
             '<h3>' + results.rows.item(i).title + '</h3>' +
             '</a></li>');
-          $('#prayerList').listview('refresh');
+          $('#prayerList').listview('refresh');  
         }
       }
       // End Prayers
@@ -184,9 +186,10 @@
       function setupDB(tx){
         tx.executeSql('DROP TABLE IF EXISTS prayers');
         tx.executeSql('DROP TABLE IF EXISTS notices');
+        tx.executeSql('DROP TABLE IF EXISTS event');
         tx.executeSql('DROP TABLE IF EXISTS events');
 
-        tx.executeSql("CREATE TABLE IF NOT EXISTS prayers(id INTEGER PRIMARY KEY,title,request,date)");
+        tx.executeSql("CREATE TABLE IF NOT EXISTS prayers(id unique,title,request,date)");
         tx.executeSql("CREATE TABLE IF NOT EXISTS notices(id INTEGER PRIMARY KEY,title,description)");
         tx.executeSql("CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY,venue,catname,date,title,description)");
 
@@ -281,7 +284,6 @@
       function errorCB(err) {
         // alert("Error processing SQL: "+err.code);
         console.log(err);
-        return true;
       }
       // Callback for DB population success
       function successCB(){
