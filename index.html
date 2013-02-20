@@ -19,9 +19,7 @@
           noticeId = 0,                                                                                                          
           prayerId = 0;                                                                                                          
 
-      function onBodyLoad(){
-        document.addEventListener("deviceready", deviceReady, false);  
-      }
+      document.addEventListener("deviceready", deviceReady, false);
       document.addEventListener("offline", deviceOffline, false);
 
       function deviceReady(){
@@ -257,7 +255,7 @@
     </script>
   </head>
 
-  <body onload="onBodyLoad()">
+  <body>
   <div id="container">
   <div id="eventListPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
 
