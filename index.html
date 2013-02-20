@@ -40,14 +40,25 @@
           eventId  = 0,                                                   
           noticeId = 0,                                                                                                          
           prayerId = 0;                                                                                                          
-
-      document.addEventListener("deviceready", deviceReady, false);
+      function onLoad(){
+        document.addEventListener("deviceready", deviceReady, false);
+      }
 
       $(function(){
         deviceReady();        
       });
 
       function deviceReady(){
+        $.mobile.loading('show');
+        db.transaction(setupDB, errorCB);
+        setupPrayers();
+        setupNotices();
+        setupEvents();
+        db.transaction(getChurchEvents, errorCB, successCB);
+        document.addEventListener("resume", onResume, false);
+      }
+
+      function onResume(){
         $.mobile.loading('show');
         db.transaction(setupDB, errorCB);
         setupPrayers();
@@ -295,7 +306,7 @@
     </script>
   </head>
 
-  <body>
+  <body onload="onLoad()">
   <div id="container">
   <div id="eventListPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
 
