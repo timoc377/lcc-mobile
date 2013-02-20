@@ -16,13 +16,10 @@
 
     <script type="text/javascript">
         $(document).on('mobileinit', function () {
- 
-            // Setting #container div as a jqm pageContainer
             $.mobile.pageContainer = $('#container');
- 
-            // Setting default page transition to slide
             $.mobile.defaultPageTransition = 'none';
- 
+            $.mobile.defaultDialogTransition = 'none';
+            $.mobile.buttonMarkup.hoverDelay = 0;
         });
     </script>
     <script src="js/jqm.page.params.js"></script>
@@ -43,11 +40,12 @@
       });
 
       function deviceReady(){
-        db.transaction(setupDB, errorCB, successCB);
+        $.mobile.loading('show');
+        db.transaction(setupDB, errorCB);
         setupPrayers();
         setupNotices();
         setupEvents();
-        db.transaction(getChurchEvents, errorCB);
+        db.transaction(getChurchEvents, errorCB, successCB);
       }
       
       $(document).bind("pagebeforechange", function( event, data ) {
@@ -58,6 +56,7 @@
 
       // Prayers
       $('#prayerListPage').live('pagebeforeshow', function(e) {
+          $.mobile.loading('show');
           db.transaction(getPrayers, errorCB);
       });
 
@@ -80,18 +79,21 @@
       }
 
       function getPrayerRequests(tx, results) {
-        $('#prayerList').html('');
+        var prayerList = $('#prayerList');
+        prayerList.empty();
         for(var i = 0; i < results.rows.length; i++){
-          $('#prayerList').append('<li><a href="#prayerDetailsPage?id=' + results.rows.item(i).id + '">' +
+          prayerList.append('<li><a href="#prayerDetailsPage?id=' + results.rows.item(i).id + '">' +
             '<h3>' + results.rows.item(i).title + '</h3>' +
             '</a></li>');
-          $('#prayerList').listview('refresh');
+          $.mobile.loading('hide');
+          prayerList.listview('refresh');
         }
       }
       // End Prayers
 
       // Notices
       $('#noticeListPage').live('pagebeforeshow', function(e) {
+          $.mobile.loading('show');
           db.transaction(getChurchNotices, errorCB);
       });
 
@@ -113,12 +115,14 @@
       }
 
       function churchNotices(tx, results) {
-        $('#noticeList').html('');
+        var noticeList = $('#noticeList');
+        noticeList.empty();
         for(var i = 0; i < results.rows.length; i++){
-          $('#noticeList').append('<li><a href="#noticeDetailsPage?id=' + results.rows.item(i).id + '">' +
+          noticeList.append('<li><a href="#noticeDetailsPage?id=' + results.rows.item(i).id + '">' +
             '<h3>' + results.rows.item(i).title + '</h3>' +
             '</a></li>');
-          $('#noticeList').listview('refresh');
+          $.mobile.loading('hide');
+          noticeList.listview('refresh');
         }
       }
       // End Notices
@@ -146,13 +150,16 @@
       }
 
       function churchEvents(tx, results) {
+        var eventList = $('#eventList');
+        eventList.empty();
         for(var i = 0; i < results.rows.length; i++){
-          $('#eventList').append('<li><a href="#eventDetailsPage?id=' + results.rows.item(i).id + '">' +
+          eventList.append('<li><a href="#eventDetailsPage?id=' + results.rows.item(i).id + '">' +
             '<h3>' + results.rows.item(i).title + '</h3>' +
             '<h4>Date/Time: ' + results.rows.item(i).date + '</h4>' +
             '</a></li>');
         }
-        $('#eventList').listview('refresh');
+        $.mobile.loading('hide');
+        eventList.listview('refresh');
       }
       // End Events
       function deviceOffline(){
