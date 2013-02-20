@@ -154,6 +154,7 @@
         tx.executeSql("CREATE TABLE IF NOT EXISTS prayers(id INTEGER PRIMARY KEY,title,request,date)");
         tx.executeSql("CREATE TABLE IF NOT EXISTS notices(id INTEGER PRIMARY KEY,title,description)");
         tx.executeSql("CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY,venue,catname,date,title,description)");
+        alert("I get here");
       }
 
       function setupPrayers(){
@@ -250,7 +251,6 @@
       // Callback for DB population success
       function successCB(){
         // Success
-        alert("Database created successfully!");
       }
     </script>
   </head>
