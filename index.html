@@ -134,10 +134,10 @@
 
       function getChurchEvent(tx, results){
         $('#eventTitle').html(results.rows.item(0).title);
-        $('#eventStartDateTime').html('<b>Date/Time:</b><br /><br />' + results.rows.item(0).date + '<br /><br />');
-        $('#eventVenue').html('<b>Location:</b><br /><br />' + results.rows.item(0).venue + '<br /><br />');
-        $('#eventCategory').html('<b>Category:</b><br /><br />' + results.rows.item(0).catname + '<br /><br />');
-        $('#eventDescription').html(results.rows.item(0).description + '<br /><br />');
+        $('#eventStartDateTime').html('<b>Date/Time:</b><br />' + results.rows.item(0).date + '<br /><br />');
+        $('#eventVenue').html('<b>Location:</b><br />' + results.rows.item(0).venue + '<br /><br />');
+        $('#eventCategory').html('<b>Category:</b><br />' + results.rows.item(0).catname + '<br /><br />');
+        $('#eventDescription').html(results.rows.item(0).description);
       }
 
       function getChurchEvents(tx) {
