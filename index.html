@@ -64,6 +64,7 @@
       }
 
       function onDeviceReady(){
+          checkConnection();
           $.mobile.loading('show');
           db.transaction(setupDB, errorCB);
           setupPrayers();
