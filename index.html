@@ -55,6 +55,18 @@
             setupNotices();
             setupEvents();
             db.transaction(getChurchEvents, errorCB, successCB);
+            
+            document.addEventListener("resume", onResume, true);
+
+      }
+
+      function onResume(){
+        $.mobile.loading('show');
+        db.transaction(setupDB, errorCB);
+        setupPrayers();
+        setupNotices();
+        setupEvents();
+        db.transaction(getChurchEvents, errorCB, successCB);
       }
       
       $(document).bind("pagebeforechange", function( event, data ) {
