@@ -7,40 +7,16 @@
     <link rel="stylesheet" href="css/jquery.mobile.css">
     <link rel="stylesheet" href="css/styles.css" />
     <style type="text/css">
+ 
+        /* Setting body margins to 0 to have proper positioning of #container div */
         body {
             margin: 0;
         }
- 
-        div#container {
+        /* #container div with absolute position and 100% width and height so it takes up whole window */
+        #container {
             position: absolute;
             width: 100%;
-            top: 0;
-            bottom: 0;
-        }
- 
-        div[data-role="header"] {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-        }
- 
-        div[data-role="content"] {
-            position: absolute;
-            top: 0;
-            bottom: 58px;
-            left: 0;
-            right: 0;
-        }
- 
-        .scrollable {
-            overflow-y: scroll;
-            -webkit-overflow-scrolling: touch;
-        }
- 
-            /* iOS specific fix, don't use it on Android devices */
-        .scrollable > * {
-            -webkit-transform: translateZ(0px);
+            height: 100%;
         }
  
     </style>
