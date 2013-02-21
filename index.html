@@ -64,7 +64,8 @@
       }
 
       function onDeviceReady(){
-          if(checkConnection() != 'none') {
+        alert(checkConnection());
+          if(checkConnection() !== 'none') {
             $.mobile.loading('show');
             db.transaction(setupDB, errorCB);
             setupPrayers();
