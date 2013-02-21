@@ -49,16 +49,16 @@
 
       function deviceReady(){
         alert('Device Ready');
-      }
-
-      function online(){
-        alert('Device Online');
         $.mobile.loading('show');
         db.transaction(setupDB, errorCB);
         setupPrayers();
         setupNotices();
         setupEvents();
         db.transaction(getChurchEvents, errorCB, successCB);
+      }
+
+      function online(){
+        alert('Device Online');
       }
       function offline(){
         alert('Device Offline');
