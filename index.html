@@ -43,10 +43,6 @@
 
       document.addEventListener("deviceready", deviceReady, false);
 
-      $(function(){
-        deviceReady();        
-      });
-
       function deviceReady(){
         document.addEventListener("online", online, false);
         document.addEventListener("offline", offline, false);
@@ -287,7 +283,7 @@
       
       // Callback for DB population error
       function errorCB(err) {
-        // alert("Error processing SQL: "+err.code);
+        alert("Error processing SQL: "+err.code);
         console.log(err);
         return true;
       }
