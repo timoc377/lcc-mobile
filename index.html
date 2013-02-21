@@ -41,9 +41,7 @@
           noticeId = 0,                                                                                                          
           prayerId = 0;                                                                                                          
 
-      function onLoad(){
-        document.addEventListener("deviceready", deviceReady, false);
-      }
+      document.addEventListener("deviceready", deviceReady, false);
 
       $(function(){
         deviceReady();        
@@ -202,9 +200,6 @@
 
       }
 
-
-      }
-
       function setupPrayers(){
         $.ajax({
           type:"POST",
@@ -305,7 +300,7 @@
     </script>
   </head>
 
-  <body onload="onLoad()">
+  <body>
   <div id="container">
   <div id="eventListPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
 
