@@ -41,17 +41,15 @@
           noticeId = 0,                                                                                                          
           prayerId = 0;                                                                                                          
       function onLoad(){
-        document.addEventListener("deviceready", onDeviceReady, true);
-      }
-
-      function onDeviceReady(){
-        alert('deviceReady');
-        $.mobile.loading('show');
-        db.transaction(setupDB, errorCB);
-        setupPrayers();
-        setupNotices();
-        setupEvents();
-        db.transaction(getChurchEvents, errorCB, successCB);
+        document.addEventListener("deviceready", function(){
+          alert('deviceReady');
+          $.mobile.loading('show');
+          db.transaction(setupDB, errorCB);
+          setupPrayers();
+          setupNotices();
+          setupEvents();
+          db.transaction(getChurchEvents, errorCB, successCB);
+        }, true);
       }
       
       $(document).bind("pagebeforechange", function( event, data ) {
