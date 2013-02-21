@@ -48,33 +48,13 @@
         document.addEventListener("deviceready", onDeviceReady, true);
       }
 
-      function checkConnection() {
-        var networkState = navigator.connection.type;
-
-        var states = {};
-        states[Connection.UNKNOWN]  = 'unknown';
-        states[Connection.ETHERNET] = 'ethernet';
-        states[Connection.WIFI]     = 'wifi';
-        states[Connection.CELL_2G]  = '2g';
-        states[Connection.CELL_3G]  = '3g';
-        states[Connection.CELL_4G]  = '4g';
-        states[Connection.NONE]     = 'none';
-        return states[networkState];
-      }
-
       function onDeviceReady(){
-          var status = checkConnection();
-          alert("Status: " + status);
-          if(checkConnection() !== 'none') {
             $.mobile.loading('show');
             db.transaction(setupDB, errorCB);
             setupPrayers();
             setupNotices();
             setupEvents();
             db.transaction(getChurchEvents, errorCB, successCB);
-          } else {
-            navigator.notification.alert("This application requires internet to get data. Please note, due to this limitation your data may be out of sync. Please enable your wifi or network connection to correct this problem.",function(){}, 'Warning: No internet connection', 'Done');
-          }
       }
       
       $(document).bind("pagebeforechange", function( event, data ) {
