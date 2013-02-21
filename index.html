@@ -41,9 +41,10 @@
           noticeId = 0,                                                                                                          
           prayerId = 0;                                                                                                          
       
-      document.addEventListener("deviceready", deviceReady, false);
+      document.addEventListener("deviceready", onDeviceReady, errorCB);
 
-      function deviceReady(){
+      function onDeviceReady(){
+        alert('deviceReady');
         $.mobile.loading('show');
         db.transaction(setupDB, errorCB);
         setupPrayers();
