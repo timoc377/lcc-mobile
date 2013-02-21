@@ -42,14 +42,14 @@
           prayerId = 0;   
 
       $(function(){
-        onLoad();
+        onDeviceReady();
       });
-
       function onLoad(){
-        document.addEventListener("deviceready", onDeviceReady, true);  
+        document.addEventListener("deviceready", onDeviceReady, true);
       }
 
       function onDeviceReady(){
+          alert('deviceReady');
           $.mobile.loading('show');
           db.transaction(setupDB, errorCB);
           setupPrayers();
