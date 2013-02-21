@@ -50,7 +50,6 @@
       }
 
       function onDeviceReady(){
-          alert('deviceReady');
           $.mobile.loading('show');
           db.transaction(setupDB, errorCB);
           setupPrayers();
