@@ -42,10 +42,11 @@
           prayerId = 0;   
 
       $(function(){
-        onDeviceReady();
+        onLoad();
       });
+
       function onLoad(){
-        document.addEventListener("deviceready", onDeviceReady, true);
+        document.addEventListener("deviceready", onDeviceReady, true);  
       }
 
       function onDeviceReady(){
@@ -284,7 +285,7 @@
     </script>
   </head>
 
-  <body onload="onLoad()">
+  <body>
   <div id="container">
   <div id="eventListPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
 
