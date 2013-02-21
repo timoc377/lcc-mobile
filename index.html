@@ -40,8 +40,10 @@
           eventId  = 0,                                                   
           noticeId = 0,                                                                                                          
           prayerId = 0;                                                                                                          
-
-      document.addEventListener("deviceready", deviceReady, false);
+      function onLoad(){
+        document.addEventListener("deviceready", deviceReady, false);
+      }
+      
 
       function deviceReady(){
         alert('Device Ready');
@@ -196,7 +198,7 @@
           tx.executeSql("CREATE TABLE IF NOT EXISTS prayers(id INTEGER PRIMARY KEY,title,request,date)");
           tx.executeSql("CREATE TABLE IF NOT EXISTS notices(id INTEGER PRIMARY KEY,title,description)");
           tx.executeSql("CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY,venue,catname,date,title,description)");
-
+          alert('SETUP DB');
       }
 
       function setupPrayers(){
@@ -299,7 +301,7 @@
     </script>
   </head>
 
-  <body>
+  <body onload="onLoad()">
   <div id="container">
   <div id="eventListPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
 
