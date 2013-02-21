@@ -64,6 +64,7 @@
 
       function onDeviceReady(){
           var status = checkConnection();
+          alert(status);
           if(checkConnection() !== 'none') {
             $.mobile.loading('show');
             db.transaction(setupDB, errorCB);
