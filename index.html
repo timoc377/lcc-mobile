@@ -42,13 +42,13 @@
           prayerId = 0;                                                                                                          
       function onLoad(){
         document.addEventListener("deviceready", deviceReady, false);
+        document.addEventListener("online", online, false);
+        document.addEventListener("offline", offline, false);
       }
       
 
       function deviceReady(){
         alert('Device Ready');
-        document.addEventListener("online", online, false);
-        document.addEventListener("offline", offline, false);
       }
 
       function online(){
@@ -445,8 +445,6 @@
     $(function(){
       $("[data-role=footer]").fixedtoolbar({ transition: "none" });
       $("[data-role=header]").fixedtoolbar({ transition: "none" });
-      // $("[data-role=footer]").fixedtoolbar({ fullscreen: true });
-      // $("[data-role=footer]").fixedtoolbar({ updatePagePadding: false });
     })
   </script>
   </body>
