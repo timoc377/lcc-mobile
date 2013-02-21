@@ -40,6 +40,7 @@
           eventId  = 0,                                                   
           noticeId = 0,                                                                                                          
           prayerId = 0;                                                                                                          
+
       function onLoad(){
         document.addEventListener("deviceready", deviceReady, false);
       }
@@ -49,13 +50,20 @@
       });
 
       function deviceReady(){
+        document.addEventListener("online", online, false);
+        document.addEventListener("offline", offline, false);
+      }
+
+      function online(){
         $.mobile.loading('show');
         db.transaction(setupDB, errorCB);
         setupPrayers();
         setupNotices();
         setupEvents();
         db.transaction(getChurchEvents, errorCB, successCB);
-        document.addEventListener("resume", onResume, false);
+      }
+      function offline(){
+        navigator.notification.alert("This application requires internet to get data. Please note, due to this limitation your data may be out of sync. Please enable your wifi or network connection to correct this problem.",function(){}, 'Warning: No internet connection', 'Done');
       }
 
       function onResume(){
@@ -184,24 +192,15 @@
       
       // PopulateDB
       function setupDB(tx){
-
-        $.ajax({
-          type: "POST",
-          dataType:"JSON",
-          url: serviceLocation + 'getprayerrequests.php',
-          success: function(e){
-            tx.executeSql('DROP TABLE IF EXISTS prayers');
-            tx.executeSql('DROP TABLE IF EXISTS notices');
-            tx.executeSql('DROP TABLE IF EXISTS events');
+          tx.executeSql("DROP TABLE IF EXISTS prayers");
+          tx.executeSql("DROP TABLE IF EXISTS notices");
+          tx.executeSql("DROP TABLE IF EXISTS events");           
             
-            tx.executeSql("CREATE TABLE IF NOT EXISTS prayers(id INTEGER PRIMARY KEY,title,request,date)");
-            tx.executeSql("CREATE TABLE IF NOT EXISTS notices(id INTEGER PRIMARY KEY,title,description)");
-            tx.executeSql("CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY,venue,catname,date,title,description)");
-          },
-          error: function(){
-            navigator.notification.alert("This application requires internet to get data. Please note, due to this limitation your data may be out of sync. Please enable your wifi or network connection to correct this problem.",function(){}, 'Warning: No internet connection', 'Done');
-          }
-        });
+          tx.executeSql("CREATE TABLE IF NOT EXISTS prayers(id INTEGER PRIMARY KEY,title,request,date)");
+          tx.executeSql("CREATE TABLE IF NOT EXISTS notices(id INTEGER PRIMARY KEY,title,description)");
+          tx.executeSql("CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY,venue,catname,date,title,description)");
+
+      }
 
 
       }
