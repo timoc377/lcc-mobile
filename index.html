@@ -52,25 +52,28 @@
         var networkState = navigator.network.connection.type;
 
         var states = {};
-        states[Connection.UNKNOWN]  = 'Unknown connection';
-        states[Connection.ETHERNET] = 'Ethernet connection';
-        states[Connection.WIFI]     = 'WiFi connection';
-        states[Connection.CELL_2G]  = 'Cell 2G connection';
-        states[Connection.CELL_3G]  = 'Cell 3G connection';
-        states[Connection.CELL_4G]  = 'Cell 4G connection';
-        states[Connection.NONE]     = 'No network connection';
+        states[Connection.UNKNOWN]  = 'unknown';
+        states[Connection.ETHERNET] = 'ethernet';
+        states[Connection.WIFI]     = 'wifi';
+        states[Connection.CELL_2G]  = '2g';
+        states[Connection.CELL_3G]  = '3g';
+        states[Connection.CELL_4G]  = '4g';
+        states[Connection.NONE]     = 'none';
 
-        alert('Connection type: ' + states[networkState]);
+        return states[networkState];
       }
 
       function onDeviceReady(){
-          checkConnection();
-          $.mobile.loading('show');
-          db.transaction(setupDB, errorCB);
-          setupPrayers();
-          setupNotices();
-          setupEvents();
-          db.transaction(getChurchEvents, errorCB, successCB);
+          if(checkConnection() != 'none') {
+            $.mobile.loading('show');
+            db.transaction(setupDB, errorCB);
+            setupPrayers();
+            setupNotices();
+            setupEvents();
+            db.transaction(getChurchEvents, errorCB, successCB);
+          } else {
+            navigator.notification.alert("This application requires internet to get data. Please note, due to this limitation your data may be out of sync. Please enable your wifi or network connection to correct this problem.",function(){}, 'Warning: No internet connection', 'Done');
+          }
       }
       
       $(document).bind("pagebeforechange", function( event, data ) {
@@ -286,8 +289,8 @@
       
       // Callback for DB population error
       function errorCB(err) {
-        alert("Error processing SQL: "+err.code);
-        console.log(err);
+        alert("Error processing SQL: "+err.message);
+        //console.log(err);
         return true;
       }
       // Callback for DB population success
