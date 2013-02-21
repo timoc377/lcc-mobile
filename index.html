@@ -39,9 +39,16 @@
           db       = window.openDatabase("LCCMobile", "1.0", "LCCMobile", 5000000),
           eventId  = 0,                                                   
           noticeId = 0,                                                                                                          
-          prayerId = 0;                                                                                                          
+          prayerId = 0;   
+
+      $(function(){
+        onDeviceReady();
+      });
       function onLoad(){
-        document.addEventListener("deviceready", function(){
+        document.addEventListener("deviceready", onDeviceReady, true);
+      }
+
+      function onDeviceReady(){
           alert('deviceReady');
           $.mobile.loading('show');
           db.transaction(setupDB, errorCB);
@@ -49,7 +56,6 @@
           setupNotices();
           setupEvents();
           db.transaction(getChurchEvents, errorCB, successCB);
-        }, true);
       }
       
       $(document).bind("pagebeforechange", function( event, data ) {
