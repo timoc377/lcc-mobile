@@ -44,11 +44,13 @@
       document.addEventListener("deviceready", deviceReady, false);
 
       function deviceReady(){
+        alert('Device Ready');
         document.addEventListener("online", online, false);
         document.addEventListener("offline", offline, false);
       }
 
       function online(){
+        alert('Device Online');
         $.mobile.loading('show');
         db.transaction(setupDB, errorCB);
         setupPrayers();
@@ -57,6 +59,7 @@
         db.transaction(getChurchEvents, errorCB, successCB);
       }
       function offline(){
+        alert('Device Offline');
         navigator.notification.alert("This application requires internet to get data. Please note, due to this limitation your data may be out of sync. Please enable your wifi or network connection to correct this problem.",function(){}, 'Warning: No internet connection', 'Done');
       }
 
