@@ -40,8 +40,9 @@
           eventId  = 0,                                                   
           noticeId = 0,                                                                                                          
           prayerId = 0;                                                                                                          
-      
-      document.addEventListener("deviceready", onDeviceReady, errorCB);
+      function onLoad(){
+        document.addEventListener("deviceready", onDeviceReady, errorCB);
+      }
 
       function onDeviceReady(){
         alert('deviceReady');
@@ -279,7 +280,7 @@
     </script>
   </head>
 
-  <body>
+  <body onload="onLoad()">
   <div id="container">
   <div id="eventListPage" data-role="page" data-theme="b" data-content-theme="c" data-add-back-btn="false">
 
