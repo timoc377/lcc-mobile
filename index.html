@@ -99,7 +99,7 @@
 
       //set events list
       function setEventsList(){
-        var event = JSON.parse(window.localStorage.getItem("events"));
+        var event = JSON.parse(localStorage.getItem("events"));
         events = event.items;
         $('#eventList').empty();
         $.each(events, function(index, e){
@@ -132,7 +132,7 @@
 
        //set notices list
       function setNoticesList(){
-        var notice = JSON.parse(window.localStorage.getItem("notices"));
+        var notice = JSON.parse(localStorage.getItem("notices"));
         notices = notice.items;
         $('#noticeList').empty();
         $.each(notices, function(index, notice) {
@@ -152,7 +152,7 @@
 
       //set prayers list
       function setPrayersList(){
-        var prayer = JSON.parse(window.localStorage.getItem("prayers"));
+        var prayer = JSON.parse(localStorage.getItem("prayers"));
         prayers = prayer.items;
         $('#prayerList').empty();
         $.each(prayers, function(index, prayer) {
@@ -179,7 +179,7 @@
           url: serviceLocation + 'getprayerrequests.php', 
           async: false,
           success:function(data){
-            window.localStorage.setItem("prayers",JSON.stringify(data));
+            localStorage.setItem("prayers",JSON.stringify(data));
           }
         });
         //notices
@@ -189,7 +189,7 @@
           url: serviceLocation + 'getnotices.php', 
           async: false,
           success:function(data){
-            window.localStorage.setItem("notices",JSON.stringify(data));
+            localStorage.setItem("notices",JSON.stringify(data));
           }
         });
         //notices
@@ -199,7 +199,7 @@
           url: serviceLocation + 'getevents.php', 
           async: false,
           success:function(data){
-            window.localStorage.setItem("events",JSON.stringify(data));
+            localStorage.setItem("events",JSON.stringify(data));
           }
         });
       }
