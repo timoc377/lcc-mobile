@@ -80,6 +80,7 @@
       function setEventsList(){
         var event = JSON.parse(window.localStorage.getItem("events"));
         events = event.items;
+        $('#eventList').empty();
         $.each(events, function(index, e){
           var date = "";
       
@@ -112,6 +113,7 @@
       function setNoticesList(){
         var notice = JSON.parse(window.localStorage.getItem("notices"));
         notices = notice.items;
+        $('#noticeList').empty();
         $.each(notices, function(index, notice) {
           $('#noticeList').append('<li><a href="#noticeDetailsPage?id=' + notice.id + '">' +
               '<h3>' + notice.title + '</h3>' +
@@ -131,6 +133,7 @@
       function setPrayersList(){
         var prayer = JSON.parse(window.localStorage.getItem("prayers"));
         prayers = prayer.items;
+        $('#prayerList').empty();
         $.each(prayers, function(index, prayer) {
           $('#prayerList').append('<li><a href="#prayerDetailsPage?id=' + prayer.id + '">' +
               '<h3>' + prayer.title + '</h3>' +
@@ -146,8 +149,6 @@
         $('#prayerDescription').html(prayer.request);
         $('#prayerDate').html(prayer.date);
       }
-
-      // $('#prayerList:visible').listview('refresh');
 
       function setupLocalStorage(){
         //requests
