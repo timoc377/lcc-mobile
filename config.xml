@@ -9,7 +9,8 @@
     <preference name="orientation" value="portrait" />
     <preference name="fullscreen" value="false" />
     <preference name="prerendered-icon" value="true" />
-
+    <preference name="webviewbounce" value="false" /
+        
     <!-- iOS -->
     <!-- icons -->
     <icon src="icons/ios/icon.png" width="57" height="57" />

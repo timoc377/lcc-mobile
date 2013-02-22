@@ -43,16 +43,37 @@
       
       function onLoad(){
         document.addEventListener("deviceready", onDeviceReady, true);
+        document.addEventListener("resume", onResume, true);
       }
 
       function onDeviceReady(){
+        var connection = checkConnection();
         $.mobile.loading('show');    
-        setupLocalStorage();  
-        setEventsList();
-        setNoticesList();
-        setPrayersList();
+        if(connection == 'none'){
+          navigator.notification.alert("This application requires internet to get data. Please note, due to this limitation your data may be out of sync. Please enable your wifi or network connection to correct this problem.", function(){}, 'Warning: No internet connection', 'Done');
+        } else {
+          setupLocalStorage();  
+          setEventsList();
+          setNoticesList();
+          setPrayersList();
+        }
       }
 
+      function onResume(){
+        var connection = checkConnection();
+        if(connection == 'none'){
+          navigator.notification.alert("This application requires internet to get data. Please note, due to this limitation your data may be out of sync. Please enable your wifi or network connection to correct this problem.", function(){}, 'Warning: No internet connection', 'Done');
+        } else {
+          setupLocalStorage();
+          setEventsList();
+          setNoticesList();
+          setPrayersList();  
+        }
+      }
+
+      function checkForInternet(){
+        
+      }
       
       $(document).live("pagebeforechange", function( event, data ) {
         $.mobile.pageData = (data && data.options && data.options.pageData)
@@ -182,7 +203,7 @@
           }
         });
       }
-      // Helper method
+      // Helper functions
       function getObject(obj, key, val) {
         var object = false;
         for (var i in obj) {
@@ -191,6 +212,20 @@
           }
         }
         return object;
+      }
+
+      function checkConnection() {
+        var networkState = navigator.network.connection.type,
+            states       = {};
+        states[Connection.UNKNOWN]  = 'unknown';
+        states[Connection.ETHERNET] = 'eth';
+        states[Connection.WIFI]     = 'wifi';
+        states[Connection.CELL_2G]  = '2g';
+        states[Connection.CELL_3G]  = '3g';
+        states[Connection.CELL_4G]  = '4g';
+        states[Connection.NONE]     = 'none';
+
+        return states[networkState];
       }
 
     </script>
