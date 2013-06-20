@@ -100,7 +100,7 @@
               '<h4>Date/Time: ' + date + '</h4>' +
               '</a></li>');
         });
-        $('#eventList:visible').listview('refresh');
+        $('#eventList').listview('refresh');
         $.mobile.loading('hide');  
       }
       //get event
@@ -124,7 +124,7 @@
               '<h3>' + notice.title + '</h3>' +
               '</a></li>');
         });
-        $('#noticeList:visible').listview('refresh');
+        $('#noticeList').listview('refresh');
         $.mobile.loading('hide');  
       }
       //get notice
@@ -144,7 +144,7 @@
               '<h3>' + prayer.title + '</h3>' +
               '</a></li>');
         });
-        $('#prayerList:visible').listview('refresh');
+        $('#prayerList').listview('refresh');
         $.mobile.loading('hide');  
       }
       //get prayer
