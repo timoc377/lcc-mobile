@@ -16,16 +16,25 @@
        <script src="js/noticedetails.js"></script>
  </head> 
  <body> 
-    <div id="eventListPage" data-role="page" data-theme="a"> 
+    <div id="eventDetailsPage" data-role="page" data-theme="a" data-add-back-btn="true"> 
          <div data-role="header"> 
-               <h1>Upcoming Events</h1> 
+               <h1>Event Details</h1> 
          </div> 
-         <div data-role="content">      
-            <ul id="eventList" data-role="listview" data-filter="true" data-dividertheme="b">
-              <li>&nbsp;</li>
-            </ul>          
+         <div data-role="content">
+
+           <div id="eventDetails">
+             <h3 id="eventTitle">&nbsp;</h3>
+             <p id="eventStartDateTime">&nbsp;</p>
+             <p id="eventEndDateTime">&nbsp;</p>
+             <p id="eventVenue">&nbsp;</p>
+             <p id="eventCategory">&nbsp;</p>
+             <p id="eventDescription">&nbsp;</p>
+           </div>
+
+           <!-- <ul id="actionList" data-role="listview" data-inset="true"></ul> -->
+
          </div>   
-        <div data-role="footer" data-id="footer" data-position="fixed">
+        <div data-role="footer">
           <div data-role="navbar" data-theme="b">
             <ul>
               <li><a href="index.html" data-role="button" data-theme="b" data-icon="grid" data-transition="flip" class="ui-btn-active ui-state-persist">Events</a></li>

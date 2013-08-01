@@ -1,37 +1,24 @@
-$(function(){
-	var serviceURL = "http://m.go2lighthouse.org/services/";
+$('#prayerDetailsPage').live('pageshow', function(event) {
+	var id = getUrlVars()["id"];
+	$.getJSON(serviceURL + 'getprayer.php?id='+id, displayPrayer);
+});
 
-	$(document).bind("pagebeforechange", function( event, data ) {
-	$.mobile.pageData = (data && data.options && data.options.pageData)
-	  ? data.options.pageData
-	  : null;
-	});
+function displayPrayer(data) {
+	var myPrayer = data.item;
+	console.log(data);
+	$('#prayerTitle').text(myPrayer.title);
+	$('#prayerDescription').text(myPrayer.request);
+	$('#prayerDate').text('Added: ' + myPrayer.date);
+}
 
-	$('#prayerDetailsPage').live('pageshow', function(event) {
-		var id = $.mobile.pageData.id;
-		$.getJSON(serviceURL + 'getprayer.php?id='+id, displayPrayer);
-	});
-
-	function displayPrayer(data) {
-		var myPrayer = data.item;
-		
-		// $('#prayerDescription').hide();
-		// $('#prayerDate').hide();
-		// $('#prayerDetails').hide();
-
-		myPrayer.title = myPrayer.title.replace(/\\/g, '');
-		myPrayer.title = myPrayer.title.replace(/\'/g, '');
-
-		$('#prayerTitle').text(myPrayer.title);
-		
-		myPrayer.request = myPrayer.request.replace(/\\/g, '');
-		myPrayer.request = myPrayer.request.replace(/\'/g, '');
-
-		console.log(myPrayer);
-		$('#prayerDescription').text(myPrayer.request);
-		$('#prayerDate').text(myPrayer.date);
-		$('#prayerDetails').show();
-		$('#prayerDetails').listview('refresh');		
-	}
-
-})
+function getUrlVars() {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}

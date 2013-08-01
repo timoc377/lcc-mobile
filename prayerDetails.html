@@ -16,20 +16,24 @@
        <script src="js/noticedetails.js"></script>
  </head> 
  <body> 
-    <div id="eventListPage" data-role="page" data-theme="a"> 
+    <div id="prayerDetailsPage" data-role="page" data-theme="a" data-add-back-btn="true"> 
          <div data-role="header"> 
-               <h1>Upcoming Events</h1> 
+               <h1>Prayer Request Details</h1> 
          </div> 
-         <div data-role="content">      
-            <ul id="eventList" data-role="listview" data-filter="true" data-dividertheme="b">
-              <li>&nbsp;</li>
-            </ul>          
+         <div data-role="content">
+
+           <div id="prayerDetails">
+             <h3 id="prayerTitle">&nbsp;</h3>
+             <p id="prayerDescription">&nbsp;</p>
+             <p id="prayerDate">&nbsp;</p>
+           </div>
+
          </div>   
-        <div data-role="footer" data-id="footer" data-position="fixed">
+        <div data-role="footer">
           <div data-role="navbar" data-theme="b">
             <ul>
-              <li><a href="index.html" data-role="button" data-theme="b" data-icon="grid" data-transition="flip" class="ui-btn-active ui-state-persist">Events</a></li>
-              <li><a href="prayerList.html" data-role="button" data-theme="b" data-icon="star" data-transition="flip">Prayer</a></li>
+              <li><a href="index.html" data-role="button" data-theme="b" data-icon="grid" data-transition="flip">Events</a></li>
+              <li><a href="prayerList.html" data-role="button" data-theme="b" data-icon="star" data-transition="flip" class="ui-btn-active ui-state-persist">Prayer</a></li>
               <li><a href="noticeList.html" data-role="button" data-theme="b" data-icon="alert" data-transition="flip">Alerts</a></li>
               <li><a href="contact.html" data-role="button" data-theme="b" data-icon="info" data-transition="flip">Contact</a></li>
             </ul>

@@ -1,30 +1,29 @@
-$(function(){
-	var serviceURL = "http://m.go2lighthouse.org/services/";
+$('#eventDetailsPage').live('pageshow', function(event) {
+	var id = getUrlVars()["id"];
+	$.getJSON(serviceURL + 'getevent.php?id='+id, displayEvent);
+});
 
-	  $(document).bind("pagebeforechange", function( event, data ) {
-      $.mobile.pageData = (data && data.options && data.options.pageData)
-          ? data.options.pageData
-          : null;
-      });
+function displayEvent(data) {
+	var myEvent = data.item;
+    console.log(myEvent.title);
+	$('#eventTitle').text(myEvent.title);
+	$('#eventStartDateTime').text('Starts: ' + myEvent.dates + ' ' + myEvent.times);
+	$('#eventEndDateTime').text('Ends: ' + myEvent.enddates + ' ' + myEvent.endtimes);
+	$('#eventVenue').text('Location: ' + myEvent.venue);
+	$('#eventCategory').text('Category: ' + myEvent.catname);
+	$('#eventDescription').text('Description: ' + myEvent.datdescription);
+//	$('#eventEventList').listview('refresh');
+	
+}
 
-	$('#eventDetailsPage').live('pageshow', function(event) {
-		var id = $.mobile.pageData.id;
-		$.getJSON(serviceURL + 'getevent.php?id='+id, displayEvent);
-	});
-
-	function displayEvent(data) {
-		var myEvent = data.item;
-	     console.log(myEvent.title)
-		$('#eventTitle').text(myEvent.title);
-		$('#eventStartDateTime').text('Starts: ' + myEvent.dates + ' ' + myEvent.times);
-		$('#eventEndDateTime').text('Ends: ' + myEvent.enddates + ' ' + myEvent.endtimes);
-		$('#eventVenue').text('Location: ' + myEvent.venue);
-		$('#eventCategory').text('Category: ' + myEvent.catname);
-		myEvent.datdescription = myEvent.datdescription.replace(/\<p\>/g, '');
-		myEvent.datdescription = myEvent.datdescription.replace(/\<\/p\>/g, '');
-		$('#eventDescription').text(myEvent.datdescription);
-		$('#eventEventList').listview('refresh');
-		
-	}
-
-})
+function getUrlVars() {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}

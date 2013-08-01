@@ -1,4 +1,4 @@
-var serviceURL = "http://m.go2lighthouse.org/services/";
+var serviceURL = "http://m.go2lighthouse.org/v2/services/";
 
 var myEvents;
 
@@ -11,17 +11,9 @@ function getEventList() {
 		$('#eventList li').remove();
 		myEvents = data.items;
 		$.each(myEvents, function(index, myEvent) {
-			var date = "";
-			
-			if(myEvent.enddates){
-				date = myEvent.dates + ' ' + myEvent.times + ' - ' + myEvent.enddates + ' ' + myEvent.endtimes;
-			} else {
-				date = myEvent.dates + ' ' + myEvent.times;
-			}
-
-			$('#eventList').append('<li><a href="#eventDetailsPage?id=' + myEvent.id + '">' +
+			$('#eventList').append('<li><a href="eventDetails.html?id=' + myEvent.id + '">' +
 					'<h3>' + myEvent.title + '</h3>' +
-					'<h4>Date/Time: ' + date + '</h4>' +
+					'<h4>Date/Time: ' + myEvent.dates + ' ' + myEvent.times + ' - ' + myEvent.enddates + ' ' + myEvent.endtimes + '</h4>' +
 					'</a></li>');
 		});
 		$('#eventList').listview('refresh');
