@@ -1,23 +1,23 @@
-$(function(){
-	var serviceURL = "http://m.go2lighthouse.org/services/";
+$('#noticeDetailsPage').live('pageshow', function(event) {
+	var id = getUrlVars()["id"];
+	$.getJSON(serviceURL + 'getnotice.php?id='+id, displayNotice);
+});
 
-	$(document).bind("pagebeforechange", function( event, data ) {
-	$.mobile.pageData = (data && data.options && data.options.pageData)
-	  ? data.options.pageData
-	  : null;
-	});
+function displayNotice(data) {
+	var myNotice = data.item;
+	console.log(data);
+	$('#noticeTitle').text(myNotice.title);
+	$('#noticeDescription').text(myNotice.description);
+}
 
-	$('#noticeDetailsPage').live('pageshow', function(event) {
-		var id = $.mobile.pageData.id;
-		$.getJSON(serviceURL + 'getnotice.php?id='+id, displayNotice);
-	});
-
-	function displayNotice(data) {
-		var myNotice = data.item;
-		console.log(data);
-		$('#noticeTitle').text(myNotice.title);
-		$('#noticeDescription').text(myNotice.description);
-		$('#noticeList').listview('refresh');		
-	}
-
-})
+function getUrlVars() {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
