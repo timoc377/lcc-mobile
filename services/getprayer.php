@@ -20,7 +20,9 @@ try {
 	$stmt->execute();
 	$myPrayer = $stmt->fetchObject();  
 	$dbh = null;
-	echo '{"item":'. json_encode($myPrayer) .'}'; 
+	$result = '{"item":'. json_encode($myPrayer) .'}';
+	$result = strip_tags($result);
+	echo $result;
 } catch(PDOException $e) {
 	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 }

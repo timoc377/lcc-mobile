@@ -18,9 +18,11 @@ try {
 	$stmt = $dbh->prepare($sql);  
 	$stmt->bindParam("id", $_GET['id']);
 	$stmt->execute();
-	$myEvent = $stmt->fetchObject();  
+	$myNotice = $stmt->fetchObject();  
 	$dbh = null;
-	echo '{"item":'. json_encode($myEvent) .'}'; 
+	$result = '{"item":'. json_encode($myNotice) .'}';
+	$result = strip_tags($result);
+	echo $result;
 } catch(PDOException $e) {
 	echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 }
