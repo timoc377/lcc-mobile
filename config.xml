@@ -5,7 +5,7 @@
         versionCode="1" 
         version   = "1.0.0">
 
-    <preference name="phonegap-version" value="2.2.0" />
+    <preference name="phonegap-version" value="2.9.0" />
     <preference name="orientation" value="portrait" />
     <preference name="fullscreen" value="false" />
     <preference name="prerendered-icon" value="true" />
@@ -37,11 +37,11 @@
     <gap:splash src="splash/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
     <!-- End Android -->
 
-    <name>Lighthouse Mobile Connect</name>
+    <name>Connect</name>
 
     <description>
-       Lighthouse Mobile Connect is a notifier that will keep you informed and up to date
-       on what is going on with Lighthouse Christian Center in Milford, DE at all times. 
+       Lighthouse Mobile Connect is a great way to keep in touch with events, prayer requests,
+       and alerts from Lighthouse Christian Center in Milford, Delaware. 
     </description>
 
     <author href="https://go2lighthouse.org" email="staff@go2lighthouse.org">
