@@ -1,7 +1,7 @@
-$('#prayerDetailsPage').live('pageshow', function(event) {
-	var id = getUrlVars()["id"];
-	$.getJSON(serviceURL + 'getprayer.php?id='+id, displayPrayer);
-});
+var serviceURL = "http://m.go2lighthouse.org/v2/services/";
+var id = getUrlVars()["id"];
+
+$.getJSON(serviceURL + 'getprayer.php?id='+id, displayPrayer);
 
 function displayPrayer(data) {
 	var myPrayer = data.item;

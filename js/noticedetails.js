@@ -1,11 +1,11 @@
-$('#noticeDetailsPage').live('pageshow', function(event) {
-	var id = getUrlVars()["id"];
-	$.getJSON(serviceURL + 'getnotice.php?id='+id, displayNotice);
-});
+var serviceURL = "http://m.go2lighthouse.org/v2/services/";
+var id = getUrlVars()["id"];
+
+$.getJSON(serviceURL + 'getnotice.php?id='+id, displayNotice);
 
 function displayNotice(data) {
 	var myNotice = data.item;
-	console.log(data);
+	
 	$('#noticeTitle').text(myNotice.title);
 	$('#noticeDescription').text(myNotice.description);
 }

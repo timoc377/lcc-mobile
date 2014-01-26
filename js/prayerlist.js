@@ -1,18 +1,14 @@
 var serviceURL = "http://m.go2lighthouse.org/v2/services/";
 
-$('#prayerListPage').live('pageshow', function(event) {
-	getPrayerList();
-});
+getPrayerList();
 
 function getPrayerList() {
 	$.getJSON(serviceURL + 'getprayerrequests.php', function(data) {
-		$('#prayerList li').remove();
+		$('#prayerList').empty();
 		myPrayers = data.items;
 		$.each(myPrayers, function(index, myPrayer) {
-			$('#prayerList').append('<li><a href="prayerDetails.html?id=' + myPrayer.id + '">' +
-					'<h3>' + myPrayer.title + '</h3>' +
-					'</a></li>');
+			$('#prayerList').append('<a class="list-group-item" href="prayerDetails.html?id=' + myPrayer.id + '">'
+				 + myPrayer.title + '</a>');
 		});
-		$('#prayerList').listview('refresh');
 	});
 }

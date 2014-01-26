@@ -1,41 +1,36 @@
-<!DOCTYPE html> 
-<html manifest="cache.manifest"> 
-  <head> 
-       <meta charset="utf-8"> 
-       <title>Lighthouse Connect</title> 
-       <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css">
-       <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script> 
-       <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
-       <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-       <script src="js/eventlist.js"></script>
-       <script src="js/eventdetails.js"></script>
-       <script src="js/prayerlist.js"></script>
-       <script src="js/prayerdetails.js"></script>
-       <script src="js/noticelist.js"></script>
-       <script src="js/noticedetails.js"></script>
- </head> 
- <body> 
-    <div id="prayerListPage" data-role="page" data-theme="a"> 
-         <div data-role="header"> 
-               <h1>Prayer Requests</h1> 
-         </div> 
-         <div data-role="content">      
-            <ul id="prayerList" data-role="listview" data-filter="true" data-dividertheme="b">
-              <li>&nbsp;</li>
-            </ul>          
-         </div>   
-        <div data-role="footer" data-id="footer" data-position="fixed">
-          <div data-role="navbar" data-theme="b">
-            <ul>
-              <li><a href="index.html" data-role="button" data-theme="b" data-icon="grid">Events</a></li>
-              <li><a href="prayerList.html" data-role="button" data-theme="b" data-icon="star" class="ui-btn-active ui-state-persist">Prayer</a></li>
-              <li><a href="noticeList.html" data-role="button" data-theme="b" data-icon="alert">Alerts</a></li>
-              <li><a href="contact.html" data-role="button" data-theme="b" data-icon="info">Contact</a></li>
-            </ul>
-          </div>
-          <h4>&copy; 2013<script>var copyrightYear = new Date().getFullYear();if(copyrightYear > 2013) {document.write("-"+copyrightYear);}</script> <a href="http://www.go2lighthouse.org">www.go2lighthouse.org</a></h4>
-        </div> 
-    </div> 
-  </body> 
+    <!-- Loading Bootstrap -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Loading Flat UI -->
+    <link href="css/flat-ui.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="wrapper">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <h4 class="navbar-text">Prayers</h4>
+    </nav>
+    <div class="container-fluid">
+        <div class="list-group" id="prayerList">
+        </div>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+        <div class="btn-group btn-group-justified">
+          <a href="index.html" class="btn btn-default"><span class="glyphicon glyphicon-star"></span><br />Events</a>
+          <a href="prayerList.html" class="btn btn-default active"><span class="glyphicon glyphicon-user"></span><br />Prayers</a>
+          <a href="noticeList.html" class="btn btn-default"><span class="glyphicon glyphicon-warning-sign"></span><br />Notices</a>
+        </div>
+    </nav>
+    </div>
+
+    <!-- Load JS here for greater good =============================-->
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/prayerlist.js"></script>
+  </body>
 </html>

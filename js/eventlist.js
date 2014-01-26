@@ -1,21 +1,30 @@
-var serviceURL = "http://m.go2lighthouse.org/v2/services/";
+$(function(){
+	var serviceURL = "http://m.go2lighthouse.org/v2/services/";
+	var myEvents;
 
-var myEvents;
-
-$('#eventListPage').live('pageshow', function(event) {
 	getEventList();
-});
 
-function getEventList() {
-	$.getJSON(serviceURL + 'getevents.php', function(data) {
-		$('#eventList li').remove();
-		myEvents = data.items;
-		$.each(myEvents, function(index, myEvent) {
-			$('#eventList').append('<li><a href="eventDetails.html?id=' + myEvent.id + '">' +
-					'<h3>' + myEvent.title + '</h3>' +
-					'<h4>Date/Time: ' + myEvent.dates + ' ' + myEvent.times + ' - ' + myEvent.enddates + ' ' + myEvent.endtimes + '</h4>' +
-					'</a></li>');
+	function getEventList() {
+		var startDate = new Date("September 24, 2013 13:00:00")
+			,endDate = new Date("September 24, 2013 14:30:00")
+			,title = "My nice event"
+			,location = "Home"
+			,notes = "Some notes about this event."
+			,success = function(message) { alert("Success: " + JSON.stringify(message)); }
+			,error = function(message) { alert("Error: " + message); };
+
+		window.plugins.calendar.createEvent(title,location,notes,startDate,endDate,success,error);
+		
+		$.getJSON(serviceURL + 'getevents.php', function(data) {
+			$('#eventList').empty();
+			myEvents = data.items;
+	      
+			$.each(myEvents, function(index, myEvent) {
+				$('#eventList').append('<a class="list-group-item" href="eventDetails.html?id=' + myEvent.id + '">' + myEvent.title + '<br />' + 
+						'Date/Time: ' + myEvent.dates + ' ' + myEvent.times + ' - ' + myEvent.enddates + ' ' + myEvent.endtimes + '<br />' +
+						'</a>');
+	               
+			});
 		});
-		$('#eventList').listview('refresh');
-	});
-}
+	}
+});
