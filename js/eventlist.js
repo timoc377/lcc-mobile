@@ -5,16 +5,15 @@ $(function(){
 	getEventList();
 
 	$('#test').on('tap', function(){
-		// var startDate = new Date("September 24, 2013 13:00:00");
-		// endDate = new Date("September 24, 2013 14:30:00"),
-		// title = "My nice event",
-		// location = "Home",
-		// notes = "Some notes about this event.",
-		// success = function(message) { alert("Success: " + JSON.stringify(message)); },
-		// error = function(message) { alert("Error: " + message); };
+		var startDate = new Date("September 24, 2013 13:00:00");
+		endDate = new Date("September 24, 2013 14:30:00"),
+		title = "My nice event",
+		location = "Home",
+		notes = "Some notes about this event.",
+		success = function(message) { alert("Success: " + JSON.stringify(message)); },
+		error = function(message) { alert("Error: " + message); };
 
-		// window.plugins.calendar.createEvent(title,location,notes,startDate,endDate,success,error);
-		alert("Hello, world!");
+		window.plugins.calendar.createEvent(title,location,notes,startDate,endDate,success,error);
 	});
 
 	function getEventList() {
