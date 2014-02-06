@@ -4,7 +4,7 @@ $(function(){
 
 	getEventList();
 
-	$('#test').on('click', function(){
+	$('#test').on('touchstart', function(){
 		var startDate = new Date("September 24, 2013 13:00:00");
 		var endDate = new Date("September 24, 2013 14:30:00");
 		var title = "My nice event";
