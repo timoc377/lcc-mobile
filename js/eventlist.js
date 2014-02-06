@@ -6,15 +6,15 @@ $(function(){
 
 	$('#test').on('touchstart', function(){
 		var startDate = new Date("September 24, 2013 13:00:00");
-		var endDate = new Date("September 24, 2013 14:30:00");
-		var title = "My nice event";
-		var location = "Home";
-		var notes = "Some notes about this event.";
-		var success = function(message) { alert("Success: " + JSON.stringify(message)); };
-		var error = function(message) { alert("Error: " + message); };
+		endDate = new Date("September 24, 2013 14:30:00"),
+		title = "My nice event",
+		location = "Home",
+		notes = "Some notes about this event.",
+		success = function(message) { alert("Success: " + JSON.stringify(message)); },
+		error = function(message) { alert("Error: " + message); };
 
 		window.plugins.calendar.createEvent(title,location,notes,startDate,endDate,success,error);
-		
+		alert(window.plugins.calendar);
 	});
 
 	function getEventList() {
