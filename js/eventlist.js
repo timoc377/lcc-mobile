@@ -4,6 +4,19 @@ $(function(){
 
 	getEventList();
 
+	$('#test').on('click', function(){
+		var startDate = new Date("September 24, 2013 13:00:00");
+		var endDate = new Date("September 24, 2013 14:30:00");
+		var title = "My nice event";
+		var location = "Home";
+		var notes = "Some notes about this event.";
+		var success = function(message) { alert("Success: " + JSON.stringify(message)); };
+		var error = function(message) { alert("Error: " + message); };
+
+		window.plugins.calendar.createEvent(title,location,notes,startDate,endDate,success,error);
+		
+	});
+
 	function getEventList() {
 		var startDate = new Date("September 24, 2013 13:00:00")
 			,endDate = new Date("September 24, 2013 14:30:00")

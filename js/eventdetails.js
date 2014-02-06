@@ -4,6 +4,17 @@ var serviceURL = "http://m.go2lighthouse.org/v2/services/";
 var id = getUrlVars()["id"];
 $.getJSON(serviceURL + 'getevent.php?id='+id, displayEvent);
 
+
+function displayEvent(data) {
+    var myEvent = data.item;
+    $('#eventTitle').text(myEvent.title);
+    $('#eventStartDateTime').text('Starts: ' + myEvent.dates + ' ' + myEvent.times);
+    $('#eventEndDateTime').text('Ends: ' + myEvent.enddates + ' ' + myEvent.endtimes);
+    $('#eventVenue').text('Location: ' + myEvent.venue);
+    $('#eventCategory').text('Category: ' + myEvent.catname);
+    $('#eventDescription').text('Description: ' + myEvent.datdescription);
+}
+
 function displayEvent(data) {
 	var myEvent = data.item;
 	$('#eventTitle').text(myEvent.title);

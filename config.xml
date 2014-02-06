@@ -37,6 +37,9 @@
     <gap:splash src="splash/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
     <!-- End Android -->
 
+    <!-- Begin Plugins -->
+    <gap:plugin name="nl.x-services.plugins.calendar" />
+    <!-- End Plugins -->
     <name>Connect</name>
 
     <description>
