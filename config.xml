@@ -40,6 +40,10 @@
     <!-- Begin Plugins -->
     <gap:plugin name="nl.x-services.plugins.calendar" />
     <!-- End Plugins -->
+
+    <gap:platform name="ios" />
+    <gap:platform name="android" />
+    
     <name>Connect</name>
 
     <description>
