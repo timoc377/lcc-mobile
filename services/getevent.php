@@ -13,7 +13,6 @@ $sql = "SELECT detail.evdet_id AS id, IFNULL(detail.summary,'') AS title, IFNULL
 			"JOIN z7njt_jevents_icsfile ics ON ics.ics_id = event.icsid " . 
   		"WHERE repetition.startrepeat >= curdate() " .
 		"AND detail.state = 1 " .
-		"ORDER BY repetition.startrepeat " .
 		"AND detail.evdet_id = :id";
 
 try {
