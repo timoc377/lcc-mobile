@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Loading Flat UI -->
+    <link href="assets/css/flat-ui.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/pageslider.css" rel="stylesheet">
+  </head>
+  <body>
+
+  <!-- Wrappers -->
+    <script id="home-tpl" type="text/x-handlebars-template">
+      <div class="wrapper">
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	    <h4 class="navbar-text">{{pageTitle}}</h4>
+	</nav>
+	<div class="container-fluid">
+	    <div class="list-group list">
+	    </div>
+	</div>
+	<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+	    <div class="btn-group btn-group-justified">
+	      {{#ifCond pageTitle "Events"}}
+		<a href="#" class="btn btn-default active"><span class="glyphicon glyphicon-star"></span><br />Events</a>
+	      {{else}}
+		<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-star"></span><br />Events</a>
+	      {{/ifCond}}
+
+	      {{#ifCond pageTitle "Prayers"}}
+		<a href="#prayers" class="btn btn-default active"><span class="glyphicon glyphicon-star"></span><br />Prayers</a>
+	      {{else}}
+		<a href="#prayers" class="btn btn-default"><span class="glyphicon glyphicon-star"></span><br />Prayers</a>
+	      {{/ifCond}}
+
+	      {{#ifCond pageTitle "Notices"}}
+		<a href="#notices" class="btn btn-default active"><span class="glyphicon glyphicon-star"></span><br />Notices</a>
+	      {{else}}
+		<a href="#notices" class="btn btn-default"><span class="glyphicon glyphicon-star"></span><br />Notices</a>
+	      {{/ifCond}}
+	    </div>
+	</nav>
+      </div>
+    </script>
+
+  <!-- Lists -->
+    <script id="list-tpl" type="text/x-handlebars-template">
+    {{#ifCond pageTitle "Events"}}
+    {{#each items}}
+      <a class="list-group-item" href="#event/{{id}}">
+	{{title}}<br />
+	Date/Time: {{dates}} {{times}} - {{enddates}} {{endtimes}} <br />
+      </a>
+    {{/each}}
+    {{/ifCond}}
+    {{#ifCond pageTitle "Prayers"}}
+      {{#each items}}
+	<a class="list-group-item" href="#prayers/{{id}}">
+	  {{title}}
+	</a>
+      {{/each}}
+    {{/ifCond}}
+    {{#ifCond pageTitle "Notices"}}
+      {{#each items}}
+	<a class="list-group-item" href="#notices/{{id}}">
+	  {{title}}
+	</a>
+      {{/each}}
+    {{/ifCond}}
+    </script>
+
+   <!-- Detail screens -->
+    <script id="event-detail-tpl" type="text/x-handlebars-template">
+      <div class="wrapper">
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	    <h4 class="navbar-text">{{pageTitle}}</h4>
+	</nav>
+	{{#ifCond pageTitle "Events"}}
+	  <div class="container-fluid">
+	    <div class="list-group" style="padding:20px;">
+	      <h4>{{item.title}}</h4>
+	      <p>Date/Time: {{item.dates}} {{item.times}} - {{item.enddates}} {{item.endtimes}}</p>
+	      <p>Location: {{item.location}}</p>
+	      {{#if item.datdescription}}
+		<p>Description: {{item.datdescription}}</p>
+	      {{/if}}
+	      <a id="addToCal" class="btn btn-block btn-lg btn-inverse">Add to Your Calendar</a>
+	    </div>
+	  </div>
+	{{/ifCond}}
+	{{#ifCond pageTitle "Prayers"}}
+	  <div class="container-fluid">
+	    <div class="list-group" style="padding:20px;">
+	      <h4>{{item.title}}</h4>
+	      <p>{{item.request}}</p>
+	    </div>
+	  </div>
+	{{/ifCond}}
+	{{#ifCond pageTitle "Notices"}}
+	  <div class="container-fluid">
+	    <div class="list-group" style="padding:20px;">
+	      <h4>{{item.title}}</h4>
+	      <p>{{item.description}}</p>
+	    </div>
+	  </div>
+	{{/ifCond}}
+	<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+	  <div class="btn-group btn-group-justified">
+	    {{#ifCond pageTitle "Events"}}
+	      <a href="#" class="btn btn-default active"><span class="glyphicon glyphicon-star"></span><br />Events</a>
+	    {{else}}
+	      <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-star"></span><br />Events</a>
+	    {{/ifCond}}
+	    {{#ifCond pageTitle "Prayers"}}
+	      <a href="#prayers" class="btn btn-default active"><span class="glyphicon glyphicon-star"></span><br />Prayers</a>
+	    {{else}}
+	      <a href="#prayers" class="btn btn-default"><span class="glyphicon glyphicon-star"></span><br />Prayers</a>
+	    {{/ifCond}}
+	    {{#ifCond pageTitle "Notices"}}
+	      <a href="#notices" class="btn btn-default active"><span class="glyphicon glyphicon-star"></span><br />Notices</a>
+	    {{else}}
+	      <a href="#notices" class="btn btn-default "><span class="glyphicon glyphicon-star"></span><br />Prayers</a>
+	    {{/ifCond}}
+	  </div>
+	</nav>
+      </div>
+    </script>
+
+    <!-- JS Libraries =============================-->
+    <script src="cordova.js"></script>
+    <script src="lib/jquery.js"></script>
+    <script src="lib/handlebars.js"></script>
+    <script src="lib/fastclick.js"></script>
+    <script src="lib/pageslider.js"></script>
+    <!-- JS Code      =============================-->
+    <script src="js/adapters/json-adapter.min.js"></script>
+    <script src="js/views.min.js"></script>
+    <script src="js/app.min.js"></script>
+  </body>
+</html>
