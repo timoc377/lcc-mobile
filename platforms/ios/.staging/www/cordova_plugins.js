@@ -20,6 +20,13 @@ module.exports = [
         "clobbers": [
             "navigator.splashscreen"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.statusbar/www/statusbar.js",
+        "id": "org.apache.cordova.statusbar.statusbar",
+        "clobbers": [
+            "window.StatusBar"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -27,7 +34,8 @@ module.exports.metadata =
 {
     "org.apache.cordova.dialogs": "0.2.5",
     "nl.x-services.plugins.calendar": "3.2",
-    "org.apache.cordova.splashscreen": "0.2.6"
+    "org.apache.cordova.splashscreen": "0.2.6",
+    "org.apache.cordova.statusbar": "0.1.3"
 }
 // BOTTOM OF METADATA
 });

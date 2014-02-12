@@ -1,2 +1,2 @@
-/Users/nathan/Projects/lccmobile/platforms/android/bin/AndroidManifest.xml : \
-/Users/nathan/Projects/lccmobile/platforms/android/AndroidManifest.xml \
+/Users/nathan/Sites/lcc-mobile/platforms/android/bin/AndroidManifest.xml : \
+/Users/nathan/Sites/lcc-mobile/platforms/android/AndroidManifest.xml \

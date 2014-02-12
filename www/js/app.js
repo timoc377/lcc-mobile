@@ -23,6 +23,14 @@
 
    /* --------------------------------- Event Registration -------------------------------- */    
    document.addEventListener('deviceready', function () {
+      // Style the iOS statusbar
+      StatusBar.overlaysWebView( false );
+      StatusBar.styleLightContent();
+
+       setTimeout(function() {
+           navigator.splashscreen.hide();
+       }, 2000);
+
        if (navigator.notification) { // Override default HTML alert with native dialog
          window.alert = function (message) {
             navigator.notification.alert(

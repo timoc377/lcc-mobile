@@ -218,3 +218,13 @@ Terminating in response to SpringBoard's termination.
 2014-02-10 21:44:26.632 LCCMobile[17101:80b] THREAD WARNING: ['Calendar'] took '697.941895' ms. Plugin should use a background thread.
 2014-02-10 21:44:26.681 LCCMobile[17101:80b] THREAD WARNING: ['Notification'] took '47.627197' ms. Plugin should use a background thread.
 Terminating in response to SpringBoard's termination.
+2014-02-11 18:44:40.973 LCCMobile[21084:80b] Multi-tasking -> Device: YES, App: YES
+2014-02-11 18:44:40.985 LCCMobile[21084:80b] Unlimited access to network resources
+2014-02-11 18:44:41.024 LCCMobile[21084:80b] [CDVTimer][splashscreen] 12.166023ms
+2014-02-11 18:44:41.029 LCCMobile[21084:80b] [CDVTimer][statusbar] 3.930986ms
+2014-02-11 18:44:41.029 LCCMobile[21084:80b] [CDVTimer][TotalPluginStartup] 17.363012ms
+2014-02-11 18:44:41.323 LCCMobile[21084:80b] Resetting plugins due to page load.
+2014-02-11 18:44:41.738 LCCMobile[21084:80b] Finished load of: file:///Users/nathan/Library/Application%20Support/iPhone%20Simulator/7.0.3/Applications/DFD57DC4-E0AC-4402-B249-4DE3B81DC970/LCCMobile.app/www/index.html
+2014-02-11 18:45:03.465 LCCMobile[21084:80b] Reached Success
+2014-02-11 18:45:03.467 LCCMobile[21084:80b] THREAD WARNING: ['Calendar'] took '600.256104' ms. Plugin should use a background thread.
+2014-02-11 18:45:03.495 LCCMobile[21084:80b] THREAD WARNING: ['Notification'] took '27.018066' ms. Plugin should use a background thread.
